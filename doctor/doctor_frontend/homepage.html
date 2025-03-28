@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link {
+            color: #343a40;
+            border-radius: 0;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .top-nav {
+            background-image: url('/api/placeholder/1200/100');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 110, 253, 0.85);
+            z-index: 0;
+        }
+        
+        .top-nav .container-fluid {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .top-nav .navbar-brand {
+            color: white;
+            font-weight: bold;
+            margin-left: 15px; /* Align with sidebar */
+        }
+        
+        .logout-btn {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+            }
+            
+            .top-nav .navbar-brand {
+                margin-left: 0;
+            }
+        }
+        
+        /* Additional styles for the integrated content */
+        .stat-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .icon {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .icon i {
+            font-size: 24px;
+            color: #0d6efd;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .appointment {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .appointment:last-child {
+            border-bottom: none;
+        }
+        
+        .patient-name {
+            font-weight: bold;
+        }
+        
+        .appointment-time {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .appointment-type {
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .rating-stars {
+            font-size: 20px;
+        }
+        
+        .rating-stars i {
+            margin-right: 3px;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg top-nav">
+            <div class="container-fluid">
+                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand ms-lg-3" href="#">LeukemiaVision</a>
+                <div class="ms-auto d-flex">
+                    <div class="dropdown me-3">
+                        
+                    </div>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> Dr. Smith
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-lg-2 sidebar p-0">
+                <div class="collapse d-lg-block" id="sidebarMenu">
+                    <div class="d-flex flex-column p-3">
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a href="homepage.html" class="nav-link active">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="account.html" class="nav-link">
+                                    <i class="bi bi-person"></i> Account
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="schedule.html" class="nav-link">
+                                    <i class="bi bi-calendar-week"></i> Schedule
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="appointment.html" class="nav-link">
+                                    <i class="bi bi-calendar-check"></i> Appointments
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="medications.html" class="nav-link">
+                                    <i class="bi bi-capsule"></i> Medication
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="progress.html" class="nav-link">
+                                    <i class="bi bi-graph-up"></i> Patient Progress
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="testResults.html" class="nav-link">
+                                    <i class="bi bi-file-earmark-text"></i> Reports
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="qa.html" class="nav-link">
+                                    <i class="bi bi-question-circle"></i> Q&A
+                                </a>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div>
+                            <button class="btn btn-danger w-100">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-10 content">
+                <h2>Dashboard</h2>
+                <p>Welcome to the Doctor Portal. Select an option from the sidebar to get started.</p>
+                
+                <!-- Stats Row -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="icon">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Today's Patients</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="icon">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <div class="stat-value">152</div>
+                            <div class="stat-label">Total Patients</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card stat-card">
+                            <div class="icon">
+                                <i class="bi bi-clipboard-check"></i>
+                            </div>
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Pending Reports</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Row -->
+                <div class="row mb-4">
+                    <!-- Appointments Column -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>Today's Appointments</div>
+                                <button class="btn btn-sm btn-primary">View All</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="appointment">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="patient-name">James Wilson</div>
+                                        <div class="appointment-time"><i class="bi bi-clock me-1"></i>09:00 AM
+                                        </div>
+                                    </div>
+                                    <div class="appointment-type">General Checkup</div>
+                                </div>
+                                <div class="appointment">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="patient-name">Sarah Johnson</div>
+                                        <div class="appointment-time"><i class="bi bi-clock me-1"></i>10:30 AM
+                                        </div>
+                                    </div>
+                                    <div class="appointment-type">Blood Pressure Monitoring</div>
+                                </div>
+                                <div class="appointment">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="patient-name">Michael Brown</div>
+                                        <div class="appointment-time"><i class="bi bi-clock me-1"></i>11:45 AM
+                                        </div>
+                                    </div>
+                                    <div class="appointment-type">Follow-up Consultation</div>
+                                </div>
+                                <div class="appointment">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="patient-name">Emily Davis</div>
+                                        <div class="appointment-time"><i class="bi bi-clock me-1"></i>02:15 PM
+                                        </div>
+                                    </div>
+                                    <div class="appointment-type">Medication Review</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities Column -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">Recent Activities</div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>Blood Test Report</strong> uploaded for Patient #1235
+                                            </div>
+                                            <small class="text-muted">2 hours ago</small>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>Medication prescribed</strong> for Patient #1542
+                                            </div>
+                                            <small class="text-muted">4 hours ago</small>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>Appointment rescheduled</strong> with James Wilson
+                                            </div>
+                                            <small class="text-muted">Yesterday</small>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>New patient registered</strong> - Emily Davis
+                                            </div>
+                                            <small class="text-muted">Yesterday</small>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>Treatment plan updated</strong> for Patient #1122
+                                            </div>
+                                            <small class="text-muted">2 days ago</small>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Content Row -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Doctor Rating Card -->
+                        <div class="card">
+                            <div class="card-header">Your Patient Ratings</div>
+                            <div class="card-body text-center">
+                                <div class="rating-stars mb-3">
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star-half text-warning"></i>
+                                </div>
+                                <h3 class="mb-0">4.5/5</h3>
+                                <p class="text-muted mb-3">Based on 124 patient reviews</p>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+                                </div>
+                                <small class="text-muted">Patients would recommend you to others</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Patient Progress Overview</div>
+                            <div class="card-body">
+                                <canvas id="patientProgressChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Chart.js
+            const ctx = document.getElementById('patientProgressChart').getContext('2d');
+            const patientProgressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Patient Recovery Rate',
+                            data: [65, 72, 68, 75, 82, 88],
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Treatment Effectiveness',
+                            data: [70, 75, 72, 78, 85, 90],
+                            borderColor: '#1abc9c',
+                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Treatment Outcomes (Last 6 Months)'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

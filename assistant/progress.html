@@ -1,0 +1,1078 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link {
+            color: #343a40;
+            border-radius: 0;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .top-nav {
+            background-image: url('/api/placeholder/1200/100');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 110, 253, 0.85);
+            z-index: 0;
+        }
+        
+        .top-nav .container-fluid {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .top-nav .navbar-brand {
+            color: white;
+            font-weight: bold;
+            margin-left: 15px; /* Align with sidebar */
+        }
+        
+        .logout-btn {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+            }
+            
+            .top-nav .navbar-brand {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
+       <!-- Top Navigation -->
+       <nav class="navbar navbar-expand-lg top-nav">
+        <div class="container-fluid">
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand ms-lg-3" href="#">LeukemiaVision</a>
+            <div class="ms-auto d-flex">
+                <div class="dropdown me-3">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-danger">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">New appointment</a></li>
+                        <li><a class="dropdown-item" href="#">Schedule update</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Dr. Smith
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="row g-0">
+        <!-- Sidebar -->
+        <div class="col-lg-2 sidebar p-0">
+            <div class="collapse d-lg-block" id="sidebarMenu">
+                <div class="d-flex flex-column p-3">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="homepage.html" class="nav-link ">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="account.html" class="nav-link">
+                                <i class="bi bi-person"></i> Account
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="schedule.html" class="nav-link">
+                                <i class="bi bi-calendar-week"></i> Schedule
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="appointment.html" class="nav-link">
+                                <i class="bi bi-calendar-check"></i> Appointments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="medications.html" class="nav-link">
+                                <i class="bi bi-capsule"></i> Medication
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="progress.html" class="nav-link active">
+                                <i class="bi bi-graph-up"></i> Patient Progress
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="testResults.html" class="nav-link">
+                                <i class="bi bi-file-earmark-text"></i> Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="qa.html" class="nav-link">
+                                <i class="bi bi-question-circle"></i> Q&A
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div>
+                        <button class="btn btn-danger w-100">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+           <!-- Main Content -->
+           <div class="col-md-9 col-lg-10">
+            <!-- Top Navigation -->
+            <div class="row p-3 mb-4 bg-white shadow-sm">
+                <div class="col-md-6">
+                    <h4>Patient Progress Tracking</h4>
+                </div>
+               
+            </div>
+
+            <!-- Patient Selection -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <label for="patientSelect" class="form-label fw-bold">Select Patient:</label>
+                                    <select class="form-select" id="patientSelect">
+                                        <option value="1">John Doe (ID: 12345)</option>
+                                        <option value="2">Sarah Johnson (ID: 12346)</option>
+                                        <option value="3">Michael Smith (ID: 12347)</option>
+                                        <option value="4">Emily Davis (ID: 12348)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="diagnosisDate" class="form-label fw-bold">Diagnosis Date:</label>
+                                    <div class="text-muted" id="diagnosisDate">January 15, 2023</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="leukemiaType" class="form-label fw-bold">Leukemia Type:</label>
+                                    <div class="text-muted" id="leukemiaType">Acute Myeloid Leukemia (AML)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Progress Section -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h5 class="mb-3">Overall Progress</h5>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <div class="card h-100 card-progress" style="border-left-color: #3498db;">
+                                        <div class="card-body">
+                                            <span class="progress-badge bg-info text-white">Stage 2</span>
+                                            <h6 class="card-title text-muted">Current Stage</h6>
+                                            <h3 class="mb-0">Remission</h3>
+                                            <small class="text-success">Improved from Stage 3</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card h-100 card-progress" style="border-left-color: #2ecc71;">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-muted">Blast Cell Count</h6>
+                                            <h3 class="mb-0">8%</h3>
+                                            <small class="text-success">Decreased by 14%</small>
+                                            <div class="progress mt-2" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card h-100 card-progress" style="border-left-color: #e74c3c;">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-muted">WBC Count</h6>
+                                            <h3 class="mb-0">9.2K/µL</h3>
+                                            <small class="text-success">Within normal range</small>
+                                            <div class="progress mt-2" style="height: 5px;">
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card h-100 card-progress" style="border-left-color: #f39c12;">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-muted">Treatment Cycle</h6>
+                                            <h3 class="mb-0">4 of 6</h3>
+                                            <small class="text-muted">Next cycle: Apr 15, 2025</small>
+                                            <div class="progress mt-2" style="height: 5px;">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blood Count Charts -->
+            <div class="row mb-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Blood Count Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="bloodCountChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Blast Cell Percentage</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="blastCellChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Test Results -->
+            <div class="row mb-4">
+                <div class="col-12 mb-3">
+                    <h5>Recent Leukemia Test Results</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Test Type</th>
+                                            <th>Results</th>
+                                            <th>Reference Range</th>
+                                            <th>Status</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Mar 05, 2025</td>
+                                            <td>Complete Blood Count (CBC)</td>
+                                            <td>WBC: 9.2K/µL<br>RBC: 4.5M/µL<br>Platelets: 150K/µL</td>
+                                            <td>WBC: 4.5-11.0K/µL<br>RBC: 4.2-5.4M/µL<br>Platelets: 150-450K/µL</td>
+                                            <td><span class="badge bg-success">Normal</span></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Feb 20, 2025</td>
+                                            <td>Bone Marrow Biopsy</td>
+                                            <td>Blast cells: 8%<br>Cellularity: 45%</td>
+                                            <td>Blast cells: <5%<br>Cellularity: 40-60%</td>
+                                            <td><span class="badge bg-warning">Elevated</span></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Feb 10, 2025</td>
+                                            <td>Flow Cytometry</td>
+                                            <td>CD34+: 4%<br>CD117+: 6%</td>
+                                            <td>CD34+: <1%<br>CD117+: <2%</td>
+                                            <td><span class="badge bg-warning">Elevated</span></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Jan 15, 2025</td>
+                                            <td>Molecular Testing</td>
+                                            <td>FLT3 mutation: Negative<br>NPM1 mutation: Positive</td>
+                                            <td>N/A</td>
+                                            <td><span class="badge bg-info">Informative</span></td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medication Management -->
+            <div class="row mb-4">
+                <div class="col-12 mb-3">
+                    <h5>Current Medications</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card medication-card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="card-title">Cytarabine</h5>
+                                                    <h6 class="text-muted">Chemotherapy Agent</h6>
+                                                </div>
+                                                <span class="badge bg-primary">Active</span>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Dosage</small>
+                                                    <span>100 mg/m²</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Frequency</small>
+                                                    <span>Once daily for 7 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Start Date</small>
+                                                    <span>Feb 28, 2025</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">End Date</small>
+                                                    <span>Mar 06, 2025</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="mt-1 text-muted">5 of 7 days completed</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card medication-card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="card-title">Daunorubicin</h5>
+                                                    <h6 class="text-muted">Chemotherapy Agent</h6>
+                                                </div>
+                                                <span class="badge bg-primary">Active</span>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Dosage</small>
+                                                    <span>60 mg/m²</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Frequency</small>
+                                                    <span>Once daily for 3 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Start Date</small>
+                                                    <span>Feb 28, 2025</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">End Date</small>
+                                                    <span>Mar 02, 2025</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="mt-1 text-muted">Completed</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card medication-card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="card-title">Ondansetron</h5>
+                                                    <h6 class="text-muted">Anti-nausea Medication</h6>
+                                                </div>
+                                                <span class="badge bg-primary">Active</span>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Dosage</small>
+                                                    <span>8 mg</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Frequency</small>
+                                                    <span>Every 8 hours as needed</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Start Date</small>
+                                                    <span>Feb 28, 2025</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">End Date</small>
+                                                    <span>Mar 10, 2025</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="mt-1 text-muted">Ongoing</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card medication-card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="card-title">Filgrastim</h5>
+                                                    <h6 class="text-muted">Growth Factor</h6>
+                                                </div>
+                                                <span class="badge bg-secondary">Scheduled</span>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Dosage</small>
+                                                    <span>5 µg/kg</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Frequency</small>
+                                                    <span>Once daily for 5 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Start Date</small>
+                                                    <span>Mar 08, 2025</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">End Date</small>
+                                                    <span>Mar 12, 2025</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="mt-1 text-muted">Not started</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Treatment Timeline -->
+            <div class="row mb-4">
+                <div class="col-12 mb-3">
+                    <h5>Treatment Timeline</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="timeline-wrapper">
+                                <ul class="timeline">
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-success"><i class="fas fa-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Induction Therapy - Cycle 1</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> Jan 20, 2023 - Feb 10, 2023</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>7+3 regimen (Cytarabine + Daunorubicin)</p>
+                                                <p class="text-success">Complete remission achieved</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-success"><i class="fas fa-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Consolidation Therapy - Cycle 1</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> Mar 15, 2023 - Mar 21, 2023</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>High-dose Cytarabine</p>
+                                                <p class="text-success">Well-tolerated</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-success"><i class="fas fa-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Consolidation Therapy - Cycle 2</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> Apr 20, 2023 - Apr 26, 2023</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>High-dose Cytarabine</p>
+                                                <p class="text-warning">Developed neutropenic fever - resolved with antibiotics</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-success"><i class="fas fa-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Consolidation Therapy - Cycle 3</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> May 25, 2023 - May 31, 2023</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>High-dose Cytarabine</p>
+                                                <p class="text-success">Well-tolerated</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-primary"><i class="fas fa-sync"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Maintenance Therapy - Current Cycle (4 of 6)</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> Feb 28, 2025 - Mar 06, 2025</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Cytarabine + Daunorubicin (reduced intensity)</p>
+                                                <p class="text-primary">In progress</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item">
+                                        <div class="timeline-badge bg-secondary"><i class="fas fa-clock"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">Maintenance Therapy - Cycle 5</h6>
+                                                <small class="text-muted"><i class="fas fa-calendar-alt"></i> Apr 15, 2025 - Apr 21, 2025</small>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Cytarabine + Daunorubicin (reduced intensity)</p>
+                                                <p class="text-secondary">Scheduled</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes & Recommendations -->
+            <div class="row mb-4">
+                <div class="col-12 mb-3">
+                    <h5>Notes & Recommendations</h5>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Add clinical notes" id="clinicalNotes" style="height: 100px">Patient showing good response to treatment. Last bone marrow biopsy showed reduction in blast cells from 22% to 8%. Continue with maintenance chemotherapy as scheduled. Monitor for cytopenias and provide growth factor support as needed. Consider reassessment for minimal residual disease after cycle 5.</textarea>
+                                    <label for="clinicalNotes">Clinical Notes</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card border-info mb-3">
+                                            <div class="card-header bg-info text-white">
+                                                <i class="fas fa-lightbulb me-2"></i>Treatment Recommendations
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                                        Complete cycle 4 of maintenance therapy
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                                        Administer Filgrastim from Mar 8 to Mar 12
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                                                        Monitor CBC weekly for 4 weeks
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <i class="fas fa-calendar-alt text-primary me-2"></i>
+                                                        Schedule bone marrow biopsy for Apr 10, prior to cycle 5
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border-warning mb-3">
+                                            <div class="card-header bg-warning text-dark">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Adverse Effects Monitoring
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Neutropenia
+                                                        <span class="badge bg-danger rounded-pill">High Risk</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Thrombocytopenia
+                                                        <span class="badge bg-warning rounded-pill">Moderate Risk</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Nausea/Vomiting
+                                                        <span class="badge bg-warning rounded-pill">Moderate Risk</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Cardiotoxicity
+                                                        <span class="badge bg-info rounded-pill">Low Risk</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Education -->
+                <div class="row mb-4">
+                    <div class="col-12 mb-3">
+                        <h5>Patient Education Resources</h5>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <i class="fas fa-book-medical text-primary fa-2x me-3"></i>
+                                                    <h5 class="card-title mb-0">Understanding AML</h5>
+                                                </div>
+                                                <p class="card-text">Comprehensive guide about Acute Myeloid Leukemia, its causes, symptoms, and treatment options.</p>
+                                                <button class="btn btn-outline-primary btn-sm">Share with Patient</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <i class="fas fa-pills text-success fa-2x me-3"></i>
+                                                    <h5 class="card-title mb-0">Managing Side Effects</h5>
+                                                </div>
+                                                <p class="card-text">Practical advice for patients on how to manage common side effects of chemotherapy and other treatments.</p>
+                                                <button class="btn btn-outline-primary btn-sm">Share with Patient</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <i class="fas fa-hand-holding-heart text-danger fa-2x me-3"></i>
+                                                    <h5 class="card-title mb-0">Support Resources</h5>
+                                                </div>
+                                                <p class="card-text">Information about support groups, mental health resources, and financial assistance programs.</p>
+                                                <button class="btn btn-outline-primary btn-sm">Share with Patient</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+     <!-- JavaScript -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+     <script>
+         // Blood Count Chart
+         const bloodCountCtx = document.getElementById('bloodCountChart').getContext('2d');
+         const bloodCountChart = new Chart(bloodCountCtx, {
+             type: 'line',
+             data: {
+                 labels: ['Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025'],
+                 datasets: [
+                     {
+                         label: 'WBC (K/µL)',
+                         data: [2.1, 3.4, 5.2, 7.8, 8.5, 9.2],
+                         borderColor: 'rgba(231, 76, 60, 1)',
+                         backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                         tension: 0.4,
+                         fill: true
+                     },
+                     {
+                         label: 'Hemoglobin (g/dL)',
+                         data: [8.2, 9.5, 10.8, 11.5, 12.1, 12.4],
+                         borderColor: 'rgba(41, 128, 185, 1)',
+                         backgroundColor: 'rgba(41, 128, 185, 0.1)',
+                         tension: 0.4,
+                         fill: true
+                     },
+                     {
+                         label: 'Platelets (K/µL)',
+                         data: [45, 78, 110, 128, 142, 150],
+                         borderColor: 'rgba(39, 174, 96, 1)',
+                         backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                         tension: 0.4,
+                         fill: true
+                     }
+                 ]
+             },
+             options: {
+                 responsive: true,
+                 plugins: {
+                     legend: {
+                         position: 'top',
+                     },
+                     tooltip: {
+                         mode: 'index',
+                         intersect: false
+                     }
+                 },
+                 scales: {
+                     y: {
+                         beginAtZero: true
+                     }
+                 }
+             }
+         });
+ 
+         // Blast Cell Chart
+         const blastCellCtx = document.getElementById('blastCellChart').getContext('2d');
+         const blastCellChart = new Chart(blastCellCtx, {
+             type: 'line',
+             data: {
+                 labels: ['Initial', 'After Induction', 'Cycle 1', 'Cycle 2', 'Cycle 3', 'Current'],
+                 datasets: [{
+                     label: 'Blast Cell Percentage',
+                     data: [45, 22, 18, 14, 10, 8],
+                     borderColor: 'rgba(243, 156, 18, 1)',
+                     backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                     tension: 0.4,
+                     fill: true
+                 }]
+             },
+             options: {
+                 responsive: true,
+                 plugins: {
+                     legend: {
+                         position: 'top',
+                     }
+                 },
+                 scales: {
+                     y: {
+                         beginAtZero: true,
+                         max: 50,
+                         title: {
+                             display: true,
+                             text: 'Percentage (%)'
+                         }
+                     }
+                 }
+             }
+         });
+ 
+         // Response Chart
+         const responseCtx = document.getElementById('responseChart').getContext('2d');
+         const responseChart = new Chart(responseCtx, {
+             type: 'radar',
+             data: {
+                 labels: [
+                     'Blast Cell Reduction',
+                     'Blood Count Recovery',
+                     'Symptom Relief',
+                     'Cytogenetic Response',
+                     'Molecular Response',
+                     'Overall Health'
+                 ],
+                 datasets: [{
+                     label: 'Initial Assessment',
+                     data: [20, 30, 40, 25, 30, 45],
+                     fill: true,
+                     backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                     borderColor: 'rgba(231, 76, 60, 1)',
+                     pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                     pointBorderColor: '#fff',
+                     pointHoverBackgroundColor: '#fff',
+                     pointHoverBorderColor: 'rgba(231, 76, 60, 1)'
+                 }, {
+                     label: 'Current Status',
+                     data: [80, 75, 85, 70, 80, 90],
+                     fill: true,
+                     backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                     borderColor: 'rgba(46, 204, 113, 1)',
+                     pointBackgroundColor: 'rgba(46, 204, 113, 1)',
+                     pointBorderColor: '#fff',
+                     pointHoverBackgroundColor: '#fff',
+                     pointHoverBorderColor: 'rgba(46, 204, 113, 1)'
+                 }]
+             },
+             options: {
+                 scales: {
+                     r: {
+                         angleLines: {
+                             display: true
+                         },
+                         suggestedMin: 0,
+                         suggestedMax: 100
+                     }
+                 }
+             }
+         });
+ 
+         // Survival Chart
+         const survivalCtx = document.getElementById('survivalChart').getContext('2d');
+         const survivalChart = new Chart(survivalCtx, {
+             type: 'doughnut',
+             data: {
+                 labels: ['Survival Probability', 'Risk'],
+                 datasets: [{
+                     data: [87, 13],
+                     backgroundColor: [
+                         'rgba(46, 204, 113, 0.8)',
+                         'rgba(231, 76, 60, 0.2)'
+                     ],
+                     borderWidth: 0
+                 }]
+             },
+             options: {
+                 cutout: '75%',
+                 plugins: {
+                     legend: {
+                         display: false
+                     },
+                     tooltip: {
+                         enabled: false
+                     }
+                 }
+             }
+         });
+ 
+         // Quality of Life Chart
+         const qolCtx = document.getElementById('qolChart').getContext('2d');
+         const qolChart = new Chart(qolCtx, {
+             type: 'bar',
+             data: {
+                 labels: ['Physical', 'Emotional', 'Social', 'Functional', 'Overall'],
+                 datasets: [
+                     {
+                         label: 'Initial Assessment',
+                         data: [45, 40, 55, 42, 45],
+                         backgroundColor: 'rgba(52, 152, 219, 0.5)',
+                         borderColor: 'rgba(52, 152, 219, 1)',
+                         borderWidth: 1
+                     },
+                     {
+                         label: 'Current Status',
+                         data: [72, 80, 75, 68, 73],
+                         backgroundColor: 'rgba(46, 204, 113, 0.5)',
+                         borderColor: 'rgba(46, 204, 113, 1)',
+                         borderWidth: 1
+                     }
+                 ]
+             },
+             options: {
+                 responsive: true,
+                 scales: {
+                     y: {
+                         beginAtZero: true,
+                         max: 100,
+                         title: {
+                             display: true,
+                             text: 'Score'
+                         }
+                     },
+                     x: {
+                         title: {
+                             display: true,
+                             text: 'Quality of Life Domains'
+                         }
+                     }
+                 }
+             }
+         });
+ 
+         // Timeline Styling
+         document.addEventListener('DOMContentLoaded', function() {
+             // Add styles for timeline
+             const style = document.createElement('style');
+             style.textContent = `
+                 .timeline {
+                     position: relative;
+                     padding: 20px 0;
+                     list-style: none;
+                     max-width: 1200px;
+                     margin: 0 auto;
+                 }
+                 .timeline:before {
+                     content: " ";
+                     position: absolute;
+                     top: 0;
+                     bottom: 0;
+                     left: 50px;
+                     width: 3px;
+                     background-color: #eee;
+                 }
+                 .timeline-item {
+                     margin-bottom: 20px;
+                     position: relative;
+                 }
+                 .timeline-badge {
+                     width: 40px;
+                     height: 40px;
+                     font-size: 1.2em;
+                     line-height: 40px;
+                     text-align: center;
+                     position: absolute;
+                     border-radius: 50%;
+                     left: 30px;
+                     margin-left: 0;
+                     top: 16px;
+                     color: #fff;
+                     z-index: 1;
+                 }
+                 .timeline-panel {
+                     position: relative;
+                     background-color: #fff;
+                     border: 1px solid #d4d4d4;
+                     border-radius: 6px;
+                     padding: 20px;
+                     margin-left: 80px;
+                     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+                 }
+                 .timeline-title {
+                     margin-top: 0;
+                     color: inherit;
+                 }
+                 .timeline-body > p,
+                 .timeline-body > ul {
+                     margin-bottom: 0;
+                 }
+                 .timeline-body > p + p {
+                     margin-top: 5px;
+                 }
+             `;
+             document.head.appendChild(style);
+         });
+ 
+         // Sidebar Toggle
+         document.addEventListener('DOMContentLoaded', function() {
+             const sidebarItems = document.querySelectorAll('.sidebar-item');
+             
+             sidebarItems.forEach(item => {
+                 item.addEventListener('click', function() {
+                     sidebarItems.forEach(el => el.classList.remove('active'));
+                     this.classList.add('active');
+                 });
+             });
+         });
+     </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

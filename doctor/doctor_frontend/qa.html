@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link {
+            color: #343a40;
+            border-radius: 0;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .top-nav {
+            background-image: url('/api/placeholder/1200/100');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 110, 253, 0.85);
+            z-index: 0;
+        }
+        
+        .top-nav .container-fluid {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .top-nav .navbar-brand {
+            color: white;
+            font-weight: bold;
+            margin-left: 15px; /* Align with sidebar */
+        }
+        
+        .logout-btn {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+            }
+            
+            .top-nav .navbar-brand {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
+   <!-- Top Navigation -->
+   <nav class="navbar navbar-expand-lg top-nav">
+    <div class="container-fluid">
+        <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand ms-lg-3" href="#">LeukemiaVision</a>
+        <div class="ms-auto d-flex">
+            <div class="dropdown me-3">
+                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-bell"></i>
+                    <span class="badge bg-danger">3</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">New appointment</a></li>
+                    <li><a class="dropdown-item" href="#">Schedule update</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> Dr. Smith
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row g-0">
+    <!-- Sidebar -->
+    <div class="col-lg-2 sidebar p-0">
+        <div class="collapse d-lg-block" id="sidebarMenu">
+            <div class="d-flex flex-column p-3">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="homepage.html" class="nav-link ">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="account.html" class="nav-link">
+                            <i class="bi bi-person"></i> Account
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="schedule.html" class="nav-link">
+                            <i class="bi bi-calendar-week"></i> Schedule
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="appointment.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i> Appointments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="medications.html" class="nav-link">
+                            <i class="bi bi-capsule"></i> Medication
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="progress.html" class="nav-link">
+                            <i class="bi bi-graph-up"></i> Patient Progress
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="testResults.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="qa.html" class="nav-link active">
+                            <i class="bi bi-question-circle "></i> Q&A
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div>
+                    <button class="btn btn-danger w-100">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+             <!-- Main Content -->
+             <div class="col-md-9 col-lg-10 p-0">
+                <!-- Top Navigation -->
+                <div class="row p-3 mb-4 bg-white shadow-sm m-0">
+                    <div class="col-md-6">
+                        <h4>Q&A Portal Management</h4>
+                    </div>
+                  
+                </div>
+
+                <!-- Q&A Management Area -->
+                <div class="container-fluid px-4">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="qaTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-qa-tab" data-bs-toggle="tab" data-bs-target="#all-qa" type="button" role="tab" aria-controls="all-qa" aria-selected="true">
+                                All Q&As
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="add-qa-tab" data-bs-toggle="tab" data-bs-target="#add-qa" type="button" role="tab" aria-controls="add-qa" aria-selected="false">
+                                Add New Q&A
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="published-qa-tab" data-bs-toggle="tab" data-bs-target="#published-qa" type="button" role="tab" aria-controls="published-qa" aria-selected="false">
+                                Published
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="draft-qa-tab" data-bs-toggle="tab" data-bs-target="#draft-qa" type="button" role="tab" aria-controls="draft-qa" aria-selected="false">
+                                Drafts
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="qaTabContent">
+                        <!-- All Q&As Tab -->
+                        <div class="tab-pane fade show active" id="all-qa" role="tabpanel" aria-labelledby="all-qa-tab">
+                            <!-- Search and Filter -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search questions...">
+                                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <select class="form-select">
+                                        <option selected>All Status</option>
+                                        <option>Published</option>
+                                        <option>Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Q&A List -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">What are the common side effects of chemotherapy for leukemia?</h5>
+                                                <span class="badge bg-success status-badge">Published</span>
+                                            </div>
+                                            <p class="card-text answer-text">Common side effects include fatigue, hair loss, nausea, vomiting, decreased blood cell counts, and increased risk of infection. Each patient may experience different side effects, and we monitor these closely during treatment.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Side Effects | Last updated: Mar 2, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">How often should patients with leukemia have follow-up appointments after remission?</h5>
+                                                <span class="badge bg-success status-badge">Published</span>
+                                            </div>
+                                            <p class="card-text answer-text">During the first year of remission, patients typically have follow-up visits every 1-3 months. In the second year, visits may be scheduled every 2-4 months, and afterward, every 6-12 months. However, the frequency depends on the specific type of leukemia and individual risk factors.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Follow-up Care | Last updated: Feb 25, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">Is exercise recommended during leukemia treatment?</h5>
+                                                <span class="badge bg-secondary status-badge">Draft</span>
+                                            </div>
+                                            <p class="card-text answer-text">Light to moderate exercise can be beneficial during leukemia treatment, depending on the patient's condition. It may help manage fatigue, maintain muscle mass, and improve mood. However, it's important to discuss with your healthcare team to develop an appropriate exercise plan.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Lifestyle | Created: Mar 8, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pagination -->
+                            <nav aria-label="Q&A pagination">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- Add New Q&A Tab -->
+                        <div class="tab-pane fade" id="add-qa" role="tabpanel" aria-labelledby="add-qa-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Create New Q&A</h5>
+                                    <form id="addQAForm">
+                                      
+                                        <div class="mb-3">
+                                            <label for="qaQuestion" class="form-label">Question</label>
+                                            <input type="text" class="form-control" id="qaQuestion" placeholder="Enter the question" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="qaAnswer" class="form-label">Answer</label>
+                                            <textarea class="form-control" id="qaAnswer" rows="6" placeholder="Enter detailed answer" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="publishImmediately" checked>
+                                                <label class="form-check-label" for="publishImmediately">
+                                                    Publish immediately
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button type="button" class="btn btn-outline-secondary">Save as Draft</button>
+                                            <button type="submit" class="btn btn-primary">Publish Q&A</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Published Q&As Tab -->
+                        <div class="tab-pane fade" id="published-qa" role="tabpanel" aria-labelledby="published-qa-tab">
+                            <!-- Filter and Sort for Published Q&As -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search published questions...">
+                                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select">
+                                        <option selected>All Categories</option>
+                                        <option>Leukemia Treatment</option>
+                                        <option>Medication</option>
+                                        <option>Side Effects</option>
+                                        <option>Lifestyle</option>
+                                        <option>Follow-up Care</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select">
+                                        <option selected>Sort by Date</option>
+                                        <option>Newest First</option>
+                                        <option>Oldest First</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Published Q&A List -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">What are the common side effects of chemotherapy for leukemia?</h5>
+                                                <span class="badge bg-success status-badge">Published</span>
+                                            </div>
+                                            <p class="card-text answer-text">Common side effects include fatigue, hair loss, nausea, vomiting, decreased blood cell counts, and increased risk of infection. Each patient may experience different side effects, and we monitor these closely during treatment.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Side Effects | Last updated: Mar 2, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">How often should patients with leukemia have follow-up appointments after remission?</h5>
+                                                <span class="badge bg-success status-badge">Published</span>
+                                            </div>
+                                            <p class="card-text answer-text">During the first year of remission, patients typically have follow-up visits every 1-3 months. In the second year, visits may be scheduled every 2-4 months, and afterward, every 6-12 months. However, the frequency depends on the specific type of leukemia and individual risk factors.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Follow-up Care | Last updated: Feb 25, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Draft Q&As Tab -->
+                        <div class="tab-pane fade" id="draft-qa" role="tabpanel" aria-labelledby="draft-qa-tab">
+                            <!-- Filter and Sort for Draft Q&As -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search draft questions...">
+                                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select">
+                                        <option selected>All Categories</option>
+                                        <option>Leukemia Treatment</option>
+                                        <option>Medication</option>
+                                        <option>Side Effects</option>
+                                        <option>Lifestyle</option>
+                                        <option>Follow-up Care</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select">
+                                        <option selected>Sort by Date</option>
+                                        <option>Newest First</option>
+                                        <option>Oldest First</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Draft Q&A List -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-4 qa-item">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title question-text">Is exercise recommended during leukemia treatment?</h5>
+                                                <span class="badge bg-secondary status-badge">Draft</span>
+                                            </div>
+                                            <p class="card-text answer-text">Light to moderate exercise can be beneficial during leukemia treatment, depending on the patient's condition. It may help manage fatigue, maintain muscle mass, and improve mood. However, it's important to discuss with your healthcare team to develop an appropriate exercise plan.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">Category: Lifestyle | Created: Mar 8, 2025</small>
+                                                <div>
+                                                    <button class="btn btn-outline-success btn-sm"><i class="fas fa-check me-1"></i>Publish</button>
+                                                    <button class="btn btn-outline-primary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#editQAModal"><i class="fas fa-edit me-1"></i>Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i class="fas fa-trash-alt me-1"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Q&A Modal -->
+    <div class="modal fade" id="editQAModal" tabindex="-1" aria-labelledby="editQAModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editQAModalLabel">Edit Q&A</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editQAForm">
+                   
+                        <div class="mb-3">
+                            <label for="editQaQuestion" class="form-label">Question</label>
+                            <input type="text" class="form-control" id="editQaQuestion" value="What are the common side effects of chemotherapy for leukemia?" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editQaAnswer" class="form-label">Answer</label>
+                            <textarea class="form-control" id="editQaAnswer" rows="6" required>Common side effects include fatigue, hair loss, nausea, vomiting, decreased blood cell counts, and increased risk of infection. Each patient may experience different side effects, and we monitor these closely during treatment.</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editPublishStatus" checked>
+                                <label class="form-check-label" for="editPublishStatus">
+                                    Published
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Q&A? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <!-- jQuery for AJAX operations in a real implementation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Script for handling Q&A operations -->
+    <script>
+        // JavaScript would be added here for the following operations:
+        // 1. Form submissions (add/edit Q&A)
+        // 2. Delete operations
+        // 3. Publish/unpublish functionality
+        // 4. Search and filtering
+        // 5. Tab switching
+        
+        // For demonstration, we're just including placeholder script with basic tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Bootstrap tabs
+            var tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabElements.forEach(function(tabEl) {
+                tabEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var tab = new bootstrap.Tab(tabEl);
+                    tab.show();
+                });
+            });
+            
+            // Sidebar navigation
+            var sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    sidebarItems.forEach(function(el) {
+                        el.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+           
+
+    

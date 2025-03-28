@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Starter Page - Medilab Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+
+
+   <!-- Print-specific styles -->
+   <style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-area, #printable-area * {
+        visibility: visible;
+      }
+      #printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="starter-page-page">
+
+  <header id="header" class="header sticky-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <img src="assets/img/logo.png" alt=""> 
+          <h1 class="sitename">Medilab</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#hero">Home<br></a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Dropdown 1</a></li>
+                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    <li><a href="#">Deep Dropdown 1</a></li>
+                    <li><a href="#">Deep Dropdown 2</a></li>
+                    <li><a href="#">Deep Dropdown 3</a></li>
+                    <li><a href="#">Deep Dropdown 4</a></li>
+                    <li><a href="#">Deep Dropdown 5</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dropdown 2</a></li>
+                <li><a href="#">Dropdown 3</a></li>
+                <li><a href="#">Dropdown 4</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <main id="main" class="mt-5 pt-5">
+    <section id="payment-section" class="payment-section py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold text-primary">Payment Options</h2>
+          <p class="lead">Please select your preferred payment method for your leukemia test appointment</p>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <!-- Appointment Summary Card -->
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0">Appointment Summary</h3>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered mb-0">
+                    <tr>
+                      <th class="bg-light w-25">Patient Name:</th>
+                      <td id="summary-patient-name">John Doe</td>
+                    </tr>
+                    <tr>
+                      <th class="bg-light">Doctor:</th>
+                      <td id="summary-doctor">Dr. Smith - Hematology</td>
+                    </tr>
+                    <tr>
+                      <th class="bg-light">Date & Time:</th>
+                      <td id="summary-datetime">March 15, 2025 - 10:00 AM</td>
+                    </tr>
+                    <tr>
+                      <th class="bg-light">Service:</th>
+                      <td>Leukemia Test</td>
+                    </tr>
+                    <tr>
+                      <th class="bg-light">Amount:</th>
+                      <td class="fw-bold text-primary">$250.00</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Method Selection -->
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0">Select Payment Method</h3>
+              </div>
+              <div class="card-body">
+                <form id="payment-form">
+                  <div class="row g-4">
+                    <!-- Online Payment Option -->
+                    <div class="col-md-6">
+                      <div class="card h-100 border" id="online-option">
+                        <div class="card-body text-center p-4">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment-method" id="online-payment" value="online">
+                            <label class="form-check-label" for="online-payment">
+                              <div class="mb-3">
+                                <i class="bi bi-credit-card text-primary fs-1"></i>
+                              </div>
+                              <h4>Pay Online Now</h4>
+                              <p class="text-muted">Complete your payment now using a credit/debit card and receive an electronic receipt.</p>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- On-site Payment Option -->
+                    <div class="col-md-6">
+                      <div class="card h-100 border" id="onsite-option">
+                        <div class="card-body text-center p-4">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment-method" id="onsite-payment" value="onsite">
+                            <label class="form-check-label" for="onsite-payment">
+                              <div class="mb-3">
+                                <i class="bi bi-hospital text-primary fs-1"></i>
+                              </div>
+                              <h4>Pay at the Clinic</h4>
+                              <p class="text-muted">Get a payment voucher to bring to the clinic. Pay on the day of your appointment.</p>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Online Payment Form (Initially Hidden) -->
+                  <div id="online-payment-form" class="mt-4 d-none">
+                    <div class="card border">
+                      <div class="card-header bg-light">
+                        <h5 class="mb-0">Credit/Debit Card Information</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="row g-3">
+                          <div class="col-12">
+                            <label for="card-name" class="form-label">Cardholder Name</label>
+                            <input type="text" class="form-control" id="card-name" placeholder="Name on card" required>
+                          </div>
+                          
+                          <div class="col-12">
+                            <label for="card-number" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
+                          </div>
+                          
+                          <div class="col-md-6">
+                            <label for="expiry-date" class="form-label">Expiration Date</label>
+                            <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
+                          </div>
+                          
+                          <div class="col-md-6">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                          </div>
+                          
+                          <div class="col-12">
+                            <button type="button" id="process-payment-btn" class="btn btn-primary btn-lg w-100">Pay $250.00</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- On-site Payment Option (Initially Hidden) -->
+                  <div id="onsite-payment-instructions" class="mt-4 d-none">
+                    <div class="card border bg-light">
+                      <div class="card-body">
+                        <h5><i class="bi bi-info-circle text-primary me-2"></i>Payment Instructions</h5>
+                        <ol class="mt-3">
+                          <li>Click the "Generate Payment Voucher" button below</li>
+                          <li>Print the voucher that appears</li>
+                          <li>Bring the printed voucher to the clinic on the day of your appointment</li>
+                          <li>Make the payment at our reception desk</li>
+                        </ol>
+                        <button type="button" id="generate-voucher-btn" class="btn btn-primary btn-lg mt-3">Generate Payment Voucher</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Printable Receipt Area (initially hidden) -->
+            <div id="printable-area" class="d-none">
+              <!-- This will be populated with either the receipt or voucher -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Medilab</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Hic solutasetp</h4>
+          <ul>
+            <li><a href="#">Molestiae accusamus iure</a></li>
+            <li><a href="#">Excepturi dignissimos</a></li>
+            <li><a href="#">Suscipit distinctio</a></li>
+            <li><a href="#">Dilecta</a></li>
+            <li><a href="#">Sit quas consectetur</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Nobis illum</h4>
+          <ul>
+            <li><a href="#">Ipsam</a></li>
+            <li><a href="#">Laudantium dolorum</a></li>
+            <li><a href="#">Dinera</a></li>
+            <li><a href="#">Trodelas</a></li>
+            <li><a href="#">Flexo</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Medilab</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+  <!-- Main JS File -->
+  <script src="../assets/js/main.js"></script>
+  <!-- Main JS File -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get elements
+      const onlinePaymentRadio = document.getElementById('online-payment');
+      const onsitePaymentRadio = document.getElementById('onsite-payment');
+      const onlinePaymentForm = document.getElementById('online-payment-form');
+      const onsitePaymentInstructions = document.getElementById('onsite-payment-instructions');
+      const onlineOption = document.getElementById('online-option');
+      const onsiteOption = document.getElementById('onsite-option');
+      const processPaymentBtn = document.getElementById('process-payment-btn');
+      const generateVoucherBtn = document.getElementById('generate-voucher-btn');
+      const printableArea = document.getElementById('printable-area');
+      
+      // Payment method selection
+      onlinePaymentRadio.addEventListener('change', function() {
+        if (this.checked) {
+          onlinePaymentForm.classList.remove('d-none');
+          onsitePaymentInstructions.classList.add('d-none');
+          onlineOption.classList.add('border-primary');
+          onsiteOption.classList.remove('border-primary');
+        }
+      });
+      
+      onsitePaymentRadio.addEventListener('change', function() {
+        if (this.checked) {
+          onsitePaymentInstructions.classList.remove('d-none');
+          onlinePaymentForm.classList.add('d-none');
+          onsiteOption.classList.add('border-primary');
+          onlineOption.classList.remove('border-primary');
+        }
+      });
+      
+      // Process online payment
+      processPaymentBtn.addEventListener('click', function() {
+        // In a real application, you would process the payment here
+        // For demo purposes, we'll just show a success message and receipt
+        
+        // Generate receipt HTML
+        const receiptHTML = `
+          <div class="card mb-4 border">
+            <div class="card-header bg-success text-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <h3 class="h5 mb-0">Payment Receipt</h3>
+                <button type="button" class="btn btn-sm btn-light no-print" onclick="window.print()">
+                  <i class="bi bi-printer me-1"></i> Print Receipt
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="text-center mb-4">
+                <h2 class="h4">Medilab Medical Center</h2>
+                <p class="mb-0">A108 Adam Street, New York, NY 535022</p>
+                <p>Phone: +1 5589 55488 55 | Email: info@example.com</p>
+              </div>
+              
+              <div class="row mb-4">
+                <div class="col-6">
+                  <h5 class="text-muted h6">Receipt Number</h5>
+                  <p class="fw-bold">REC-${Math.floor(10000 + Math.random() * 90000)}</p>
+                </div>
+                <div class="col-6 text-end">
+                  <h5 class="text-muted h6">Date & Time</h5>
+                  <p class="fw-bold">${new Date().toLocaleString()}</p>
+                </div>
+              </div>
+              
+              <div class="table-responsive mb-4">
+                <table class="table table-bordered">
+                  <tr>
+                    <th class="bg-light">Patient Name:</th>
+                    <td>${document.getElementById('summary-patient-name').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Doctor:</th>
+                    <td>${document.getElementById('summary-doctor').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Date & Time:</th>
+                    <td>${document.getElementById('summary-datetime').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Service:</th>
+                    <td>Leukemia Test</td>
+                  </tr>
+                </table>
+              </div>
+              
+              <div class="table-responsive mb-4">
+                <table class="table table-bordered">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Description</th>
+                      <th class="text-end">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Leukemia Test</td>
+                      <td class="text-end">$250.00</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Total</th>
+                      <th class="text-end">$250.00</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-6">
+                  <h5 class="text-muted h6">Payment Method</h5>
+                  <p>Credit Card (xxxx-xxxx-xxxx-${document.getElementById('card-number').value.slice(-4)})</p>
+                </div>
+                <div class="col-6 text-end">
+                  <h5 class="text-muted h6">Payment Status</h5>
+                  <p class="badge bg-success fs-6">PAID</p>
+                </div>
+              </div>
+              
+              <div class="alert alert-info mt-4 mb-0">
+                <p class="mb-0"><small>Please bring this receipt with you on the day of your appointment.</small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Show receipt
+        printableArea.innerHTML = receiptHTML;
+        printableArea.classList.remove('d-none');
+        
+        // Scroll to receipt
+        printableArea.scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      // Generate voucher for on-site payment
+      generateVoucherBtn.addEventListener('click', function() {
+        // Generate voucher HTML
+        const voucherHTML = `
+          <div class="card mb-4 border">
+            <div class="card-header bg-primary text-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <h3 class="h5 mb-0">Payment Voucher</h3>
+                <button type="button" class="btn btn-sm btn-light no-print" onclick="window.print()">
+                  <i class="bi bi-printer me-1"></i> Print Voucher
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="text-center mb-4">
+                <h2 class="h4">Medilab Medical Center</h2>
+                <p class="mb-0">A108 Adam Street, New York, NY 535022</p>
+                <p>Phone: +1 5589 55488 55 | Email: info@example.com</p>
+              </div>
+              
+              <div class="row mb-4">
+                <div class="col-6">
+                  <h5 class="text-muted h6">Voucher Number</h5>
+                  <p class="fw-bold">VC-${Math.floor(10000 + Math.random() * 90000)}</p>
+                </div>
+                <div class="col-6 text-end">
+                  <h5 class="text-muted h6">Issue Date</h5>
+                  <p class="fw-bold">${new Date().toLocaleDateString()}</p>
+                </div>
+              </div>
+              
+              <div class="table-responsive mb-4">
+                <table class="table table-bordered">
+                  <tr>
+                    <th class="bg-light">Patient Name:</th>
+                    <td>${document.getElementById('summary-patient-name').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Doctor:</th>
+                    <td>${document.getElementById('summary-doctor').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Date & Time:</th>
+                    <td>${document.getElementById('summary-datetime').textContent}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Service:</th>
+                    <td>Leukemia Test</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Amount Due:</th>
+                    <td class="fw-bold">$250.00</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Payment Status:</th>
+                    <td><span class="badge bg-warning text-dark">PENDING</span></td>
+                  </tr>
+                </table>
+              </div>
+              
+              <div class="alert alert-warning mb-0">
+                <h5 class="h6"><i class="bi bi-exclamation-triangle me-2"></i>Important Instructions:</h5>
+                <ol class="mb-0">
+                  <li>Please bring this voucher to the clinic on the day of your appointment.</li>
+                  <li>Payment can be made at the reception desk via cash, credit/debit card, or insurance.</li>
+                  <li>Please arrive 15 minutes before your scheduled appointment time.</li>
+                  <li>This voucher is valid only for the appointment date and time specified above.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Show voucher
+        printableArea.innerHTML = voucherHTML;
+        printableArea.classList.remove('d-none');
+        
+        // Scroll to voucher
+        printableArea.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+
+</html>

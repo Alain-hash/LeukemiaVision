@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>LeukemiaVision - Medical Dashboard</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="starter-page-page">
+
+  <header id="header" class="header sticky-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="../index.html" class="logo d-flex align-items-center me-auto">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="../assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">LeukemiaVision</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#hero">Home<br></a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li class="dropdown"><a href="#"><span> Your History</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Medical Records</a></li>
+                <li><a href="#">Appointment History</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- Test Results & Medications Section -->
+  <section id="patient-dashboard" class="patient-dashboard py-5">
+    <div class="container">
+      <div class="section-title text-center mb-5">
+        <h2>Patient Dashboard</h2>
+        <p>Monitor your test results and medication details</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Test Results Card -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+              <h3 class="card-title mb-0"><i class="bi bi-clipboard2-pulse me-2"></i> Test Results</h3>
+            </div>
+            <div class="card-body">
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-droplet-fill text-danger me-2"></i>
+                    <strong>Complete Blood Count (CBC)</strong>
+                  </div>
+                  <span class="badge bg-primary rounded-pill">March 5, 2025</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-activity text-warning me-2"></i>
+                    <strong>Bone Marrow Aspiration</strong>
+                  </div>
+                  <span class="badge bg-primary rounded-pill">February 22, 2025</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-cells text-success me-2"></i>
+                    <strong>Flow Cytometry</strong>
+                  </div>
+                  <span class="badge bg-primary rounded-pill">February 15, 2025</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-dna text-info me-2"></i>
+                    <strong>Cytogenetic Analysis</strong>
+                  </div>
+                  <span class="badge bg-primary rounded-pill">February 10, 2025</span>
+                </a>
+              </div>
+            </div>
+            <div class="card-footer bg-white text-center">
+              <a href="testresults.html" class="btn btn-outline-primary">View All Test Results</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Medications Card -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-success text-white">
+              <h3 class="card-title mb-0"><i class="bi bi-capsule me-2"></i> Medications</h3>
+            </div>
+            <div class="card-body">
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-pill text-danger me-2"></i>
+                    <strong>Imatinib (Gleevec)</strong>
+                    <small class="d-block text-muted">400mg - Once daily</small>
+                  </div>
+                  <span class="badge bg-success rounded-pill">Active</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-capsule-pill text-primary me-2"></i>
+                    <strong>Dasatinib (Sprycel)</strong>
+                    <small class="d-block text-muted">100mg - Once daily</small>
+                  </div>
+                  <span class="badge bg-success rounded-pill">Active</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-pill-fill text-warning me-2"></i>
+                    <strong>Nilotinib (Tasigna)</strong>
+                    <small class="d-block text-muted">300mg - Twice daily</small>
+                  </div>
+                  <span class="badge bg-secondary rounded-pill">Discontinued</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="bi bi-bandaid text-info me-2"></i>
+                    <strong>Ondansetron (Zofran)</strong>
+                    <small class="d-block text-muted">8mg - As needed</small>
+                  </div>
+                  <span class="badge bg-success rounded-pill">Active</span>
+                </a>
+              </div>
+            </div>
+            <div class="card-footer bg-white text-center">
+              <a href="medications.html" class="btn btn-outline-success">View All Medications</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Information Sections with Read More -->
+  <section id="info-sections" class="py-5 bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Understanding Leukemia Section -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-info text-white">
+              <h3 class="card-title mb-0"><i class="bi bi-info-circle me-2"></i> Understanding Leukemia</h3>
+            </div>
+            <div class="card-body">
+              <p>Leukemia is a type of cancer that affects the blood and bone marrow, the spongy center of bones where blood cells are formed. It develops when blood cells produced in the bone marrow grow out of control.</p>
+              
+              <div class="collapse" id="understandingMore">
+                <p>There are several types of leukemia, which can be classified based on how quickly the disease develops and worsens. The main types include:</p>
+                <ul>
+                  <li><strong>Acute Lymphocytic Leukemia (ALL)</strong> - Progresses rapidly, affects lymphoid cells</li>
+                  <li><strong>Acute Myelogenous Leukemia (AML)</strong> - Progresses rapidly, affects myeloid cells</li>
+                  <li><strong>Chronic Lymphocytic Leukemia (CLL)</strong> - Progresses slowly, affects lymphoid cells</li>
+                  <li><strong>Chronic Myelogenous Leukemia (CML)</strong> - Progresses slowly, affects myeloid cells</li>
+                </ul>
+                <p>Each type of leukemia requires different treatment approaches and has varying prognoses. Early detection and proper treatment planning are essential for improving outcomes.</p>
+              </div>
+              
+              <button class="btn btn-outline-info mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#understandingMore" aria-expanded="false" aria-controls="understandingMore">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Treatment Options Section -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-warning text-dark">
+              <h3 class="card-title mb-0"><i class="bi bi-heart-pulse me-2"></i> Treatment Options</h3>
+            </div>
+            <div class="card-body">
+              <p>Treatment for leukemia depends on many factors including the type of leukemia, your age, how fast the leukemia is progressing, and whether the leukemia has spread to other parts of your body.</p>
+              
+              <div class="collapse" id="treatmentMore">
+                <p>Common treatments for leukemia include:</p>
+                <ul>
+                  <li><strong>Chemotherapy</strong> - Uses drugs to kill leukemia cells</li>
+                  <li><strong>Targeted therapy</strong> - Targets specific vulnerabilities in cancer cells</li>
+                  <li><strong>Radiation therapy</strong> - Uses high-energy radiation to damage leukemia cells</li>
+                  <li><strong>Stem cell transplant</strong> - Replaces diseased bone marrow with healthy bone marrow</li>
+                  <li><strong>Immunotherapy</strong> - Helps your immune system fight cancer</li>
+                </ul>
+                <p>Your healthcare team will work with you to develop a treatment plan tailored to your specific needs and condition. Regular monitoring and adjustments to your treatment plan may be necessary as you progress through therapy.</p>
+              </div>
+              
+              <button class="btn btn-outline-warning mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#treatmentMore" aria-expanded="false" aria-controls="treatmentMore">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Living with Leukemia Section -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-secondary text-white">
+              <h3 class="card-title mb-0"><i class="bi bi-people me-2"></i> Living with Leukemia</h3>
+            </div>
+            <div class="card-body">
+              <p>A leukemia diagnosis can be overwhelming, but many people find ways to maintain a good quality of life during and after treatment. Managing symptoms, finding support, and taking care of your overall health are important aspects of living with leukemia.</p>
+              
+              <div class="collapse" id="livingMore">
+                <p>Here are some tips for living well with leukemia:</p>
+                <ul>
+                  <li>Follow your treatment plan and keep all medical appointments</li>
+                  <li>Eat a healthy diet to support your immune system</li>
+                  <li>Stay physically active as much as possible</li>
+                  <li>Manage stress through relaxation techniques</li>
+                  <li>Join a support group to connect with others facing similar challenges</li>
+                  <li>Communicate openly with your healthcare team about symptoms and concerns</li>
+                </ul>
+                <p>Remember that each person's experience with leukemia is unique. What works for one person may not work for another, so it's important to find strategies that work best for you.</p>
+              </div>
+              
+              <button class="btn btn-outline-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#livingMore" aria-expanded="false" aria-controls="livingMore">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Research & Clinical Trials Section -->
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-danger text-white">
+              <h3 class="card-title mb-0"><i class="bi bi-journal-medical me-2"></i> Research & Clinical Trials</h3>
+            </div>
+            <div class="card-body">
+              <p>Ongoing research and clinical trials are continuously expanding our understanding of leukemia and leading to new treatment options. Participating in a clinical trial may give you access to cutting-edge treatments not yet widely available.</p>
+              
+              <div class="collapse" id="researchMore">
+                <p>Some areas of current leukemia research include:</p>
+                <ul>
+                  <li><strong>CAR T-cell therapy</strong> - Engineering a patient's own immune cells to fight cancer</li>
+                  <li><strong>New targeted therapies</strong> - Developing drugs that target specific genetic mutations</li>
+                  <li><strong>Immunotherapies</strong> - Enhancing the body's immune response against leukemia cells</li>
+                  <li><strong>Minimal residual disease testing</strong> - Detecting very small numbers of leukemia cells</li>
+                  <li><strong>Combination therapies</strong> - Finding the most effective combinations of treatments</li>
+                </ul>
+                <p>If you're interested in participating in a clinical trial, discuss this option with your healthcare provider, who can help determine if any trials are appropriate for your specific situation.</p>
+              </div>
+              
+              <button class="btn btn-outline-danger mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#researchMore" aria-expanded="false" aria-controls="researchMore">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Medilab</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Hic solutasetp</h4>
+          <ul>
+            <li><a href="#">Molestiae accusamus iure</a></li>
+            <li><a href="#">Excepturi dignissimos</a></li>
+            <li><a href="#">Suscipit distinctio</a></li>
+            <li><a href="#">Dilecta</a></li>
+            <li><a href="#">Sit quas consectetur</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Nobis illum</h4>
+          <ul>
+            <li><a href="#">Ipsam</a></li>
+            <li><a href="#">Laudantium dolorum</a></li>
+            <li><a href="#">Dinera</a></li>
+            <li><a href="#">Trodelas</a></li>
+            <li><a href="#">Flexo</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Medilab</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>

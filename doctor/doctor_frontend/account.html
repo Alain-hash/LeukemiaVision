@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link {
+            color: #343a40;
+            border-radius: 0;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .top-nav {
+            background-image: url('/api/placeholder/1200/100');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 110, 253, 0.85);
+            z-index: 0;
+        }
+        
+        .top-nav .container-fluid {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .top-nav .navbar-brand {
+            color: white;
+            font-weight: bold;
+            margin-left: 15px; /* Align with sidebar */
+        }
+        
+        .logout-btn {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+            }
+            
+            .top-nav .navbar-brand {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
+             <!-- Top Navigation -->
+             <nav class="navbar navbar-expand-lg top-nav">
+                <div class="container-fluid">
+                    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand ms-lg-3" href="#">LeukemiaVision</a>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">New appointment</a></li>
+                                <li><a class="dropdown-item" href="#">Schedule update</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> Dr. Smith
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="row g-0">
+                <!-- Sidebar -->
+                <div class="col-lg-2 sidebar p-0">
+                    <div class="collapse d-lg-block" id="sidebarMenu">
+                        <div class="d-flex flex-column p-3">
+                            <ul class="nav nav-pills flex-column mb-auto">
+                                <li class="nav-item">
+                                    <a href="homepage.html" class="nav-link ">
+                                        <i class="bi bi-speedometer2"></i> Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="account.html" class="nav-link active">
+                                        <i class="bi bi-person"></i> Account
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="schedule.html" class="nav-link">
+                                        <i class="bi bi-calendar-week"></i> Schedule
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="appointment.html" class="nav-link">
+                                        <i class="bi bi-calendar-check"></i> Appointments
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="medications.html" class="nav-link">
+                                        <i class="bi bi-capsule"></i> Medication
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="progress.html" class="nav-link">
+                                        <i class="bi bi-graph-up"></i> Patient Progress
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="testResults.html" class="nav-link">
+                                        <i class="bi bi-file-earmark-text"></i> Reports
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="qa.html" class="nav-link">
+                                        <i class="bi bi-question-circle"></i> Q&A
+                                    </a>
+                                </li>
+                            </ul>
+                            <hr>
+                            <div>
+                                <button class="btn btn-danger w-100">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-10 content">
+                <!-- Top Navigation Content from Second Code -->
+                <div class="row p-3 mb-4 bg-white shadow-sm">
+                    <div class="col-md-6">
+                        <h4>Doctor Account Management</h4>
+                    </div>
+                    
+                </div>
+
+                <!-- Account Management Content from Second Code -->
+                <div class="container-fluid px-4">
+                    <!-- Navigation Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="accountTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">
+                                <i class="bi bi-person-circle me-2"></i>Profile
+                            </button>
+                        </li>
+                      
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab" aria-controls="preferences" aria-selected="false">
+                                <i class="bi bi-gear me-2"></i>Preferences
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="accountTabContent">
+                        <!-- Profile Tab -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <div class="bg-light p-3 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
+                                                <i class="bi bi-person-medical fa-4x text-primary"></i>
+                                            </div>
+                                            <h5 class="card-title">Dr. John Smith</h5>
+                                            <p class="text-muted">Oncologist</p>
+                                            
+                                            <!-- Account Creation Date -->
+                                            <p class="fw-bold">Account Created: <span class="text-primary">January 15, 2022</span></p>
+                                        
+                                            <button class="btn btn-primary" id="changeProfilePicture">
+                                                <i class="bi bi-camera me-2"></i>Change Profile Picture
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Personal Information</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="profileForm">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6">
+                                                        <label for="firstName" class="form-label" >First Name</label>
+                                                        <input type="text" class="form-control" id="firstName" value="John" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="lastName" class="form-label">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastName" value="Smith" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email Address</label>
+                                                    <input type="email" class="form-control" id="email" value="drsmith@leukemiavision.com" disabled>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="specialization" class="form-label">Specialization</label>
+                                                    <input type="text" class="form-control" id="specialization" value="Oncology" disabled>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="licenseNumber" class="form-label">License Number</label>
+                                                    <input type="text" class="form-control" id="licenseNumber" value="MED123456789" disabled>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="phone" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="phone" value="(555) 123-4567">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <textarea class="form-control" id="address" rows="3">123 Medical Center Dr, Healthcare City, HC 12345</textarea>
+                                                </div>
+                                                
+                                                
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-save me-2"></i>Save Changes
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                
+                        <!-- Preferences Tab -->
+                        <div class="tab-pane fade" id="preferences" role="tabpanel" aria-labelledby="preferences-tab">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Notification Settings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6>Email Notifications</h6>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailAppointments" checked>
+                                            <label class="form-check-label" for="emailAppointments">
+                                                New appointment notifications
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailRescheduled" checked>
+                                            <label class="form-check-label" for="emailRescheduled">
+                                                Rescheduled appointment notifications
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailCancelled" checked>
+                                            <label class="form-check-label" for="emailCancelled">
+                                                Cancelled appointment notifications
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailReports" checked>
+                                            <label class="form-check-label" for="emailReports">
+                                                New patient reports
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <h6>SMS Notifications</h6>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="smsAppointments" checked>
+                                            <label class="form-check-label" for="smsAppointments">
+                                                Appointment reminders
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="smsUrgent">
+                                            <label class="form-check-label" for="smsUrgent">
+                                                Urgent patient messages
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save me-2"></i>Save Preferences
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle two-factor authentication toggle
+            const enableTwoFactorCheckbox = document.getElementById('enableTwoFactor');
+            const setupTwoFactorButton = document.getElementById('setupTwoFactor');
+
+            if (enableTwoFactorCheckbox && setupTwoFactorButton) {
+                enableTwoFactorCheckbox.addEventListener('change', function() {
+                    setupTwoFactorButton.disabled = !this.checked;
+                });
+            }
+
+            // Form submit handlers
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Profile information updated successfully!');
+                });
+            }
+
+            // Profile picture change button
+            const changeProfilePicButton = document.getElementById('changeProfilePicture');
+            if (changeProfilePicButton) {
+                changeProfilePicButton.addEventListener('click', function() {
+                    // In a real application, this would open a file dialog
+                    alert('This would open a file upload dialog in a real application.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
