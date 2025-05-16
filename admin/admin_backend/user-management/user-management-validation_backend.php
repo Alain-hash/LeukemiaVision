@@ -9,7 +9,6 @@ function validateDoctorData(
     $speciality
 ) {
     $errors = [];
-
     // Create a data array to maintain the existing logic
     $data = [
         'name' => $username,
@@ -31,7 +30,6 @@ function validateDoctorData(
     } 
     return $errors; // Return errors if any exist
 }
-
 function validateAssistantData(
     $username,
     $email,
@@ -78,4 +76,5 @@ function checkUserExists($username, $email, $connection)
         return false; // user does not exist
     }
 }
+$errors=$_SESSION['errors'];
 ?>

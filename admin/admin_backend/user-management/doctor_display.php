@@ -5,7 +5,7 @@ include("../../../database/db.php");
 
 $stmt = $connection->prepare("
     SELECT 
-        user.User_ID , 
+        user.User_ID, 
         user.Name, 
         user.Email,  
         user.Status, 
@@ -22,6 +22,7 @@ $result = $stmt->get_result();
 $Doctors = array();
 while ($Doctor = $result->fetch_assoc()) {
     $Doctors[] = $Doctor;
+    
 }
 
 echo json_encode($Doctors);

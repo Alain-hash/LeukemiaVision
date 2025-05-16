@@ -341,7 +341,7 @@
             
             // Redirect to login page after 3 seconds
             setTimeout(function() {
-              window.location.href = 'login.html';
+              window.location.href = 'login.php';
             }, 3000);
           } else {
             // Show error message
@@ -356,7 +356,7 @@
       // Cancel button
       cancelBtn.addEventListener('click', function() {
         // Redirect to account settings or dashboard
-        window.location.href = 'dashboard.html';
+        window.location.href = 'login.php';
       });
     });
   </script>

@@ -1,104 +1,94 @@
 <?php
 session_start();
-include("../../../database/db.php");
+require("../../../database/db.php");
 
 header('Content-Type: application/json');
 
-// Input validation
-if (!isset($_POST['doctor_id']) || !isset($_POST['assistant_id'])){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (empty($_POST['doctor_id']) || empty($_POST['assistant_id'])) {
     echo json_encode([
         'success' => false, 
-        'message' => 'Doctor and Assistant IDs are required.'
+        'message' => 'Both doctor and assistant IDs are required. Received: ' . 
+                     'doctor=' . (isset($_POST['doctor_id']) ? $_POST['doctor_id'] : 'none') . ', ' .
+                     'assistant=' . (isset($_POST['assistant_id']) ? $_POST['assistant_id'] : 'none')
+    ]);
+    exit;
+}
+$doctorId = (int)$_POST['doctor_id'];
+$assistantId = (int)$_POST['assistant_id'];
+
+// Verify the IDs exist in their respective tables
+$doctorCheck = $connection->prepare("SELECT COUNT(*) FROM doctor WHERE User_ID = ?");
+$doctorCheck->bind_param("i", $doctorId);
+$doctorCheck->execute();
+$doctorCheck->bind_result($doctorExists);
+$doctorCheck->fetch();
+$doctorCheck->close();
+
+$assistantCheck = $connection->prepare("SELECT COUNT(*) FROM assistant WHERE User_ID = ?");
+$assistantCheck->bind_param("i", $assistantId);
+$assistantCheck->execute();
+$assistantCheck->bind_result($assistantExists);
+$assistantCheck->fetch();
+$assistantCheck->close();
+
+if (!$assistantExists) {
+    echo json_encode(['success' => false, 'message' => "Assistant with ID $assistantId does not exist"]);
+    exit;
+}
+
+if (!$doctorExists) {
+    echo json_encode(['success' => false, 'message' => "Doctor with ID $doctorId does not exist"]);
+    exit;
+}
+
+$stmt1 = $connection->prepare("SELECT Doctor_ID from doctor where User_ID = ?");
+$stmt1->bind_param("i",$doctorId);
+$stmt1->execute();
+$result = $stmt1->get_result();
+$stmt1->close();
+if($result->num_rows > 0){
+    $row = $result->fetch_assoc();
+    $docID = $row['Doctor_ID'];
+}
+$stmt = $connection->prepare("UPDATE assistant SET Doctor_ID = ? WHERE User_ID = ?");
+
+if (!$stmt) {
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Prepare statement failed: ' . $connection->error
     ]);
     exit;
 }
 
-$doctorId = $_POST['doctor_id'];
-$assistantId = $_POST['assistant_id'];
+$stmt->bind_param("ii", $docID, $assistantId); // Use integers for both parameters
 
-// Validate IDs are not empty
-if (empty($doctorId) || empty($assistantId)) {
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Please select both a doctor and an assistant.'
-    ]);
-    exit;
-}
-
-try {
-    // Validate doctor exists
-    $doctorStmt = $connection->prepare("SELECT * FROM doctor WHERE Doctor_ID = ?");
-    $doctorStmt->bind_param("i", $doctorId);
-    $doctorStmt->execute();
-    $doctorResult = $doctorStmt->get_result();
-
-    if ($doctorResult->num_rows == 0) {
+if ($stmt->execute()) {
+    // Check if any rows were actually affected
+    if ($stmt->affected_rows > 0) {
         echo json_encode([
-            'success' => false, 
-            'message' => 'Invalid Doctor ID.'
-        ]);
-        exit;
-    }
-
-    // Validate assistant exists
-    $assistantStmt = $connection->prepare("SELECT * FROM assistant WHERE Assistant_ID = ?");
-    $assistantStmt->bind_param("i", $assistantId);
-    $assistantStmt->execute();
-    $assistantResult = $assistantStmt->get_result();
-
-    if ($assistantResult->num_rows == 0) {
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Invalid Assistant ID.'
-        ]);
-        exit;
-    }
-
-    // Check if the assistant is already assigned to a doctor
-    $checkAssignmentStmt = $connection->prepare("
-        SELECT * FROM assistant 
-        WHERE Assistant_ID = ? AND Doctor_ID IS NOT NULL
-    ");
-    $checkAssignmentStmt->bind_param("i", $assistantId);
-    $checkAssignmentStmt->execute();
-    $checkAssignmentResult = $checkAssignmentStmt->get_result();
-
-    if ($checkAssignmentResult->num_rows > 0) {
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Assistant is already assigned to a doctor.'
-        ]);
-        exit;
-    }
-
-    // Update the assistant with the doctor ID
-    $updateStmt = $connection->prepare("
-        UPDATE assistant 
-        SET Doctor_ID = ? 
-        WHERE Assistant_ID = ?
-    ");
-    $updateStmt->bind_param("ii", $doctorId, $assistantId);
-    
-    if ($updateStmt->execute()) {
-        echo json_encode([
-            'success' => true, 
-            'message' => 'Doctor and Assistant successfully assigned!'
+            'success' => true
         ]);
     } else {
-        throw new Exception("Database update failed");
+        echo json_encode([
+            'success' => false, 
+            'message' => "No records updated. Assistant #$assistantId may already be assigned to this doctor."
+        ]);
     }
-
-    // Close statements
-    $doctorStmt->close();
-    $assistantStmt->close();
-    $checkAssignmentStmt->close();
-    $updateStmt->close();
-} catch (Exception $e) {
+} else {
     echo json_encode([
         'success' => false, 
-        'message' => 'An error occurred: ' . $e->getMessage()
+        'message' => 'Assignment failed: ' . $stmt->error
     ]);
 }
 
+$stmt->close();
 $connection->close();
+
+}else{
+    echo json_encode(['success' => false, 'message' => 'Please use POST method']);
+    exit;
+}
+
+
 ?>

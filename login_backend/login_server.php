@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //------------------------------//
@@ -12,7 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize data
     $email = isset($_POST['email']) ? trim($_POST['email']) : null;
     $password = isset($_POST['password']) ? trim($_POST['password']) : null;
-    $rememberMe = isset($_POST['rememberMe']) ? true : false;
+
+    // Store the submitted data in session for repopulating the form
+    $_SESSION['old_input'] = [
+        'email' => $email,
+        // Don't store password for security reasons
+    ];
 
     // Data validation
     $errors = validateLoginData($email, $password);
@@ -24,65 +28,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Attempt to authenticate the user
     $user = authenticateUser($email, $password, $connection);
 
     if ($user) {
-        // Set session variables
+        // Clear old input if login is successful
+        if (isset($_SESSION['old_input'])) {
+            unset($_SESSION['old_input']);
+        }
+
         $_SESSION['user_id'] = $user['User_ID'];
         $_SESSION['user_name'] = $user['Name'];
         $_SESSION['user_email'] = $user['Email'];
         $_SESSION['user_role'] = $user['Role'];
-        
-        // Set remember me cookie if checked
-        if ($rememberMe) {
-            // Generate a unique token
-            $token = bin2hex(random_bytes(32));
-            
-            // Store token in database (you'd want to implement this in login_model.php)
-            storeRememberMeToken($user['User_ID'], $token, $connection);
-            
-            // Set the cookie - expires in 30 days
-            setcookie('remember_token', $token, time() + (86400 * 30), "/", "", true, true);
-        }
+        $_SESSION['user_Status'] = $user['Status'];
 
-        // Redirect based on role
         if ($user['Role'] == 'Patient') {
-            header("Location: ../patient/editprofile.php");
+            header("Location: ../index.php");
         } else if ($user['Role'] == 'Doctor') {
-            header("Location: ../doctor/doctor_dashboard.php");
+            $user_id = $_SESSION['user_id'];
+            $stmt2 = $connection->prepare("
+                SELECT Doctor_ID
+                FROM doctor
+                WHERE User_ID = ?
+            ");
+            $stmt2->bind_param("i", $user_id);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+
+            if ($row = $result2->fetch_assoc()) {
+                $_SESSION['doctor_id'] = $row['Doctor_ID'];
+            }
+            header("Location: ../doctor/homepage.php");
+        } else if ($user['Role'] == 'Assistant') {
+            header("Location: ../assistant/homepage.php");
         } else if ($user['Role'] == 'Admin') {
-            header("Location: ../admin/admin_dashboard.php");
+            header("Location: ../admin/admin_frontend/admin-dashboard.php");
         } else {
             header("Location: ../index.php");
         }
         exit();
     } else {
-        // Authentication failed
         $_SESSION['errors'] = ["Invalid email or password. Please try again."];
         header("Location: ../login.php");
         exit();
     }
 }
 
-// Check for remember me cookie on page load (you could place this in a separate file that runs on every page)
-if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
-    $token = $_COOKIE['remember_token'];
-    $user = getUserByRememberToken($token, $connection);
-    
-    if ($user) {
-        // Set session variables
-        $_SESSION['user_id'] = $user['User_ID'];
-        $_SESSION['user_name'] = $user['Name'];
-        $_SESSION['user_email'] = $user['Email'];
-        $_SESSION['user_role'] = $user['Role'];
-        
-        // Refresh the token
-        $newToken = bin2hex(random_bytes(32));
-        storeRememberMeToken($user['User_ID'], $newToken, $connection);
-        setcookie('remember_token', $newToken, time() + (86400 * 30), "/", "", true, true);
-    }
-}
-
 $connection->close();
-?>

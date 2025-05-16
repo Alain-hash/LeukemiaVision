@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include("../../../database/db.php");
 
 $stmt = $connection->prepare("

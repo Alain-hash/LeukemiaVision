@@ -1,0 +1,307 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hello",
+        "Hi",
+        "Hey",
+        "Good morning",
+        "Good afternoon",
+        "Good evening",
+        "How are you?",
+        "What's up?"
+      ],
+      "responses": [
+        "Hello! Welcome to the Leukemia Care Center. How can I help you today?",
+        "Hi there! I'm here to assist you with leukemia-related questions.",
+        "Greetings! I'm your leukemia care assistant. What would you like to know?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "Have a good day",
+        "I'm leaving",
+        "Take care"
+      ],
+      "responses": [
+        "Goodbye! Remember we're here to support you in your leukemia journey.",
+        "Take care! Don't hesitate to reach out if you have more questions about leukemia.",
+        "Wishing you all the best. Come back anytime you need leukemia information."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "Thank you so much",
+        "Appreciate it",
+        "I appreciate your help"
+      ],
+      "responses": [
+        "You're welcome! We're here to support your leukemia care needs.",
+        "Happy to help with your leukemia questions!",
+        "It's my pleasure to assist you with leukemia information."
+      ]
+    },
+    {
+      "tag": "emotion_anxious",
+      "patterns": [
+        "I'm scared",
+        "I'm worried",
+        "I'm anxious",
+        "I'm nervous",
+        "I'm afraid",
+        "This is frightening",
+        "I'm terrified"
+      ],
+      "responses": [
+        "It's completely normal to feel anxious about leukemia. Would you like information about our support services?",
+        "Many patients feel this way. Remember you're not alone in this journey.",
+        "We understand this can be scary. Our counselors are available to help."
+      ]
+    },
+    {
+      "tag": "emotion_sad",
+      "patterns": [
+        "I'm sad",
+        "I'm depressed",
+        "I feel down",
+        "I'm feeling low",
+        "I'm unhappy",
+        "This is so hard"
+      ],
+      "responses": [
+        "I'm sorry you're feeling this way. Leukemia can be emotionally challenging. Would you like to speak with a counselor?",
+        "Your feelings are valid. We have support groups that might help.",
+        "Many patients experience these emotions. You're not alone."
+      ]
+    },
+    {
+      "tag": "emotion_angry",
+      "patterns": [
+        "I'm angry",
+        "This isn't fair",
+        "Why me?",
+        "I'm frustrated",
+        "This makes me mad"
+      ],
+      "responses": [
+        "It's understandable to feel angry about a leukemia diagnosis. These feelings are normal.",
+        "Anger is a common reaction. We have resources to help process these emotions.",
+        "Would you like to speak with someone about these feelings? We can connect you."
+      ]
+    },
+    {
+      "tag": "emotion_hopeful",
+      "patterns": [
+        "I'm hopeful",
+        "I'm optimistic",
+        "Things will get better",
+        "I can beat this",
+        "I feel positive"
+      ],
+      "responses": [
+        "That's wonderful to hear! A positive attitude helps in leukemia treatment.",
+        "Your optimism is inspiring! Modern leukemia treatments are constantly improving.",
+        "That's great! Hope is powerful in the healing process."
+      ]
+    },
+    {
+      "tag": "leukemia_definition",
+      "patterns": [
+        "What is leukemia?",
+        "Define leukemia",
+        "Explain leukemia",
+        "Tell me about leukemia",
+        "Leukemia meaning"
+      ],
+      "responses": [
+        "Leukemia is a cancer of the body's blood-forming tissues, including the bone marrow and lymphatic system. It typically involves white blood cells.",
+        "Leukemia is a type of cancer that affects blood cells, usually starting in the bone marrow where blood is produced.",
+        "Leukemia is cancer of the blood cells that causes abnormal blood cell production and function."
+      ]
+    },
+    {
+      "tag": "leukemia_types",
+      "patterns": [
+        "What types of leukemia are there?",
+        "Different kinds of leukemia",
+        "Classify leukemia",
+        "Categories of leukemia",
+        "Varieties of leukemia"
+      ],
+      "responses": [
+        "The main types are: Acute Lymphocytic Leukemia (ALL), Acute Myeloid Leukemia (AML), Chronic Lymphocytic Leukemia (CLL), and Chronic Myeloid Leukemia (CML).",
+        "Leukemia is classified as acute or chronic, and by whether it affects lymphoid or myeloid cells. Our AI system can help classify specific cases.",
+        "There are four main types: ALL, AML, CLL, and CML. Each has different characteristics and treatment approaches."
+      ]
+    },
+    {
+      "tag": "leukemia_symptoms",
+      "patterns": [
+        "What are leukemia symptoms?",
+        "Signs of leukemia",
+        "How do I know if I have leukemia?",
+        "Leukemia warning signs",
+        "Symptoms to watch for"
+      ],
+      "responses": [
+        "Common symptoms include fatigue, frequent infections, easy bruising/bleeding, fever/night sweats, bone pain, and swollen lymph nodes.",
+        "Symptoms may include persistent fatigue, unexplained weight loss, recurrent infections, and excessive bruising. However, only medical tests can confirm leukemia.",
+        "Watch for: persistent fatigue, frequent infections, easy bruising, fever, bone pain, and swollen lymph nodes. Would you like information about our screening services?"
+      ]
+    },
+    {
+      "tag": "leukemia_treatment",
+      "patterns": [
+        "How is leukemia treated?",
+        "Leukemia treatment options",
+        "What treatments are available?",
+        "Cures for leukemia",
+        "Therapy for leukemia"
+      ],
+      "responses": [
+        "Treatment depends on the type but may include chemotherapy, targeted therapy, radiation, stem cell transplant, or immunotherapy. Our specialists can recommend the best approach.",
+        "Options include chemotherapy, targeted drugs, radiation, biological therapy, or stem cell transplant. Each case is unique.",
+        "Treatments vary by leukemia type and stage. Our AI classification system helps determine the most effective treatment plan for each patient."
+      ]
+    },
+    {
+      "tag": "leukemia_medications",
+      "patterns": [
+        "What medications are used for leukemia?",
+        "Leukemia drugs",
+        "Medications for leukemia treatment",
+        "Drugs used in leukemia therapy",
+        "Leukemia medicine"
+      ],
+      "responses": [
+        "Common medications include chemotherapy drugs like Vincristine, Prednisone, and Daunorubicin. Targeted therapies like Imatinib and Ibrutinib are also used.",
+        "Medications vary by leukemia type. Chemotherapy drugs, targeted therapies, and immunotherapies are common. Our doctors can recommend the best options.",
+        "Leukemia treatments often involve chemotherapy drugs, targeted therapies, and immunotherapies. Specific medications depend on the type and stage of leukemia."
+      ]
+    },
+    {
+      "tag": "leukemia_side_effects",
+      "patterns": [
+        "What are the side effects of leukemia treatment?",
+        "Side effects of chemotherapy",
+        "Side effects of leukemia medications",
+        "Common side effects",
+        "What to expect from treatment"
+      ],
+      "responses": [
+        "Common side effects include fatigue, nausea, hair loss, and increased risk of infections. Each treatment has different side effects.",
+        "Side effects vary but may include fatigue, nausea, hair loss, and increased risk of infections. Our team can help manage these side effects.",
+        "Chemotherapy and other treatments can cause side effects like fatigue, nausea, and hair loss. Our support services can help you manage these."
+      ]
+    },
+    {
+      "tag": "leukemia_prognosis",
+      "patterns": [
+        "What is the prognosis for leukemia?",
+        "Leukemia survival rates",
+        "Chances of recovery",
+        "Prognosis for different types of leukemia",
+        "Leukemia outlook"
+      ],
+      "responses": [
+        "Prognosis varies by type and stage. Early detection and treatment improve outcomes. Our specialists can provide detailed information.",
+        "Survival rates vary by type and stage. Modern treatments have improved outcomes for many patients.",
+        "Prognosis depends on the type and stage of leukemia. Our AI system can help predict outcomes based on specific cases."
+      ]
+    },
+    {
+      "tag": "leukemia_prevention",
+      "patterns": [
+        "How can I prevent leukemia?",
+        "Ways to reduce leukemia risk",
+        "Preventing leukemia",
+        "Leukemia prevention tips",
+        "Reducing leukemia risk"
+      ],
+      "responses": [
+        "While there's no sure way to prevent leukemia, avoiding exposure to radiation and certain chemicals can reduce risk.",
+        "Maintaining a healthy lifestyle and avoiding known risk factors can help reduce the risk of leukemia.",
+        "There's no guaranteed way to prevent leukemia, but avoiding certain risk factors and maintaining a healthy lifestyle can help."
+      ]
+    },
+    {
+      "tag": "leukemia_support_services",
+      "patterns": [
+        "What support services do you offer?",
+        "Support for leukemia patients",
+        "Counseling services",
+        "Support groups",
+        "Patient resources"
+      ],
+      "responses": [
+        "We offer counseling, support groups, and educational resources. Our team is here to support you emotionally and practically.",
+        "Our support services include counseling, support groups, and educational materials to help you through your leukemia journey.",
+        "We provide comprehensive support services, including counseling and support groups, to help you cope with leukemia."
+      ]
+    },
+    {
+      "tag": "appointment",
+      "patterns": [
+        "I need an appointment",
+        "Schedule a visit",
+        "Book a consultation",
+        "Make an appointment",
+        "See a doctor",
+        "When can I come in?"
+      ],
+      "responses": [
+        "We'd be happy to schedule an appointment. Please call our scheduling desk at 555-LEUK-CARE or visit our website.",
+        "To schedule an appointment, you can call us at 555-LEUK-CARE or use our online booking system.",
+        "Our scheduling team can help you book a consultation. Please call 555-LEUK-CARE during business hours."
+      ]
+    },
+    {
+      "tag": "location",
+      "patterns": [
+        "Where are you located?",
+        "What's your address?",
+        "Directions to your center",
+        "How do I get there?",
+        "Location of your facility"
+      ],
+      "responses": [
+        "We're located at 123 Cancer Care Drive in Medical City. Free parking is available in front of the building.",
+        "Our leukemia center is at 123 Cancer Care Drive, Medical City. We're open Monday-Friday 8am-5pm.",
+        "You can find us at 123 Cancer Care Drive. We're in the Medical District, next to City General Hospital."
+      ]
+    },
+    {
+      "tag": "ai_classification",
+      "patterns": [
+        "How does your AI classify leukemia?",
+        "Tell me about your AI system",
+        "How does the AI work?",
+        "Leukemia classification AI",
+        "How do you diagnose leukemia?"
+      ],
+      "responses": [
+        "Our AI system analyzes medical data including blood tests, genetic markers, and other diagnostics to accurately classify leukemia types for optimal treatment planning.",
+        "The AI examines patterns in blood cell counts, genetic factors, and other clinical data to determine leukemia classification with high accuracy.",
+        "Our advanced AI uses machine learning to evaluate diagnostic information and classify leukemia cases, helping doctors create personalized treatment plans."
+      ]
+    },
+    {
+      "tag": "out_of_scope",
+      "patterns": [],
+      "responses": [
+        "I'm sorry, I can only answer questions related to leukemia and our medical center services.",
+        "That's outside my area of expertise. I'm here to help with leukemia-related questions.",
+        "I'm afraid I can't answer that. My focus is providing information about leukemia care.",
+        "For that question, I recommend speaking with one of our medical professionals about leukemia concerns."
+      ]
+    }
+  ]
+}

@@ -26,6 +26,6 @@ function validateLoginData($email, $password) {
         $errors["password"] = "Password is required.";
     }
 
-    return $errors; // Return errors if any exist
+    return $errors; 
 }
 ?>

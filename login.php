@@ -1,9 +1,5 @@
 <?php
 session_start();
-
-// Store form data for repopulation after validation errors
-$old_email = isset($_SESSION['old_input']['email']) ? htmlspecialchars($_SESSION['old_input']['email']) : '';
-$remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : '';
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +8,7 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Patient Login - LeukemiaVision</title>
+  <title>Login - LeukemiaVision</title>
   <meta name="description" content="Login to your LeukemiaVision patient account">
   <meta name="keywords" content="LeukemiaVision, login, healthcare, patient portal">
 
@@ -37,11 +33,12 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-    body {
-      background: url('assets/img/signback.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-  </style>
+  body {
+    background: url('assets/img/login_backg.png') ;
+    background-size: 1400px;
+  }
+</style>
+
 </head>
 
 <body>
@@ -50,8 +47,8 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
     <div class="topbar d-flex align-items-center">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@leukemivision.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+961 76 491 905</span></i>
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -66,6 +63,11 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
         <a href="index.php" class="logo d-flex align-items-center me-auto">
           <h1 class="sitename">LeukemiaVision</h1>
         </a>
+          <!-- Center: Login -->
+  <div class="position-absolute top-50 start-50 translate-middle d-none d-md-block">
+    <span class="fw-bold fs-2 text-dark">Login</span>
+  </div>
+        
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="index.php">Home</a></li>
@@ -80,21 +82,14 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
-          <!-- Page Title -->
-          <div class="text-center mb-5">
-            <h2 class="fw-bold mb-3">Patient Login</h2>
-            <div class="col-lg-8 mx-auto">
-              <p class="text-muted">Access your healthcare services and appointments</p>
-            </div>
-          </div>
           <!-- Card with Form -->
           <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-            <div class="card-header bg-primary text-white py-3">
+          <div class="card-header py-3 text-white" style="background-color: var(--accent-color);">
               <h5 class="card-title mb-0">
                 <i class="bi bi-person-circle me-2"></i>Account Access
               </h5>
             </div>
-            <div class="card-body p-4">
+            <div class="card-body p-4" style="background-color: #f8f9ff;">
               
               <!-- Success message -->
               <?php if (isset($_SESSION['success'])): ?>
@@ -126,10 +121,13 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
               
               <!-- Login Form -->
               <form id="loginForm" class="needs-validation" action="login_backend/login_server.php" method="POST" novalidate>
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); ?>">
+                
                 <!-- Email -->
                 <div class="mb-4">
                   <label for="email" class="form-label fw-semibold">
-                    <i class="bi bi-envelope-fill text-primary me-2"></i>Email Address
+                    <i ></i>Email Address
                   </label>
                   <div class="input-group">
                     <span class="input-group-text bg-light">
@@ -141,8 +139,9 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
                       id="email" 
                       name="email" 
                       placeholder="Enter your email address" 
-                      value="<?php echo $old_email; ?>"
+                      value="<?php echo isset($_SESSION['old_input']['email']) ? htmlspecialchars($_SESSION['old_input']['email']) : ''; ?>"
                       required
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     >
                     <?php if (isset($_SESSION['errors']['email'])): ?>
                       <div class="invalid-feedback">
@@ -159,7 +158,7 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
                 <!-- Password -->
                 <div class="mb-4">
                   <label for="password" class="form-label fw-semibold">
-                    <i class="bi bi-lock-fill text-primary me-2"></i>Password
+                    <i ></i>Password
                   </label>
                   <div class="input-group">
                     <span class="input-group-text bg-light">
@@ -194,24 +193,10 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
                 </div>
                 
                 <div class="row mb-4">
-                  <!-- Remember Me -->
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input 
-                        class="form-check-input" 
-                        type="checkbox" 
-                        id="rememberMe" 
-                        name="rememberMe"
-                        <?php echo $remember_checked; ?>
-                      >
-                      <label class="form-check-label" for="rememberMe">
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
+                  
                   
                   <!-- Forgot Password -->
-                  <div class="col-6 text-end">
+                  <div class="col-4 text-end">
                     <a href="changepass.php" class="text-decoration-none">Forgot password?</a>
                   </div>
                 </div>
@@ -228,16 +213,10 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
               
                 <!-- Submit Button -->
                 <div class="d-grid gap-2 mb-4">
-                  <button type="submit" class="btn btn-primary btn-lg" id="loginBtn">
+                <button type="submit" class="btn btn-lg text-white" id="loginBtn" style="background-color: var(--accent-color);;">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Log In
                   </button>
                 </div>
-                
-                <?php 
-                  // Clear session errors and old input after displaying
-                  if (isset($_SESSION['errors'])) unset($_SESSION['errors']);
-                  if (isset($_SESSION['old_input'])) unset($_SESSION['old_input']);
-                ?>
               </form>
 
               <!-- Register Link -->
@@ -289,10 +268,10 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
         <div class="col-md-3">
           <h6 class="fw-bold mb-3">Quick Links</h6>
           <ul class="list-unstyled">
-            <li><a href="index.php" class="text-decoration-none text-secondary">Home</a></li>
-            <li><a href="index.php#about" class="text-decoration-none text-secondary">About Us</a></li>
-            <li><a href="index.php#services" class="text-decoration-none text-secondary">Services</a></li>
-            <li><a href="index.php#contact" class="text-decoration-none text-secondary">Contact</a></li>
+            <li><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+            <li><a href="index.html#about" class="text-decoration-none text-secondary">About Us</a></li>
+            <li><a href="index.html#services" class="text-decoration-none text-secondary">Services</a></li>
+            <li><a href="index.html#contact" class="text-decoration-none text-secondary">Contact</a></li>
           </ul>
         </div>
         <div class="col-md-3">
@@ -309,15 +288,14 @@ $remember_checked = isset($_SESSION['old_input']['rememberMe']) ? 'checked' : ''
       <div class="row">
         <div class="col-md-12 text-center">
           <p class="mb-0 text-muted">&copy; <?php echo date('Y'); ?> LeukemiaVision. All Rights Reserved.</p>
-         
+          <p class="small text-muted">
+            Designed by <a href="https://bootstrapmade.com/" class="text-decoration-none">BootstrapMade</a> | 
+            Distributed by <a href="https://themewagon.com" class="text-decoration-none">ThemeWagon</a>
+          </p>
         </div>
       </div>
     </div>
   </footer>
-
-  <a href="#" class="btn btn-primary btn-lg rounded-circle position-fixed bottom-0 end-0 m-4 shadow" id="back-to-top">
-    <i class="bi bi-arrow-up"></i>
-  </a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

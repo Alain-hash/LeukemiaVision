@@ -1,10 +1,24 @@
 <?php
 session_start();
+include("../../database/db.php");
+if (!isset($_SESSION['user_id']) && $_SESSION['Role'] != 'Admin') {
+  header("location:../../login.php");
+  exit();
+}
+include("../admin_backend/user-management/refresh_doctor_schedule.php");
 
-//if(!isset($_SESSION['User_ID']) || $_SESSION['Role']!='Doctor'){
-//header("location:../../signup.php");
-//}
+//--------------------user statistics------------------//
+$doctorQuery = "SELECT COUNT(*) as doctor_count FROM user WHERE Role = 'Doctor'";
+$doctorResult = $connection->query($doctorQuery);
+$doctorCount = $doctorResult->fetch_assoc()['doctor_count'];
 
+$assistantQuery = "SELECT COUNT(*) as assistant_count FROM user WHERE Role = 'Assistant'";
+$assistantResult = $connection->query($assistantQuery);
+$assistantCount = $assistantResult->fetch_assoc()['assistant_count'];
+
+$patientQuery = "SELECT COUNT(*) as patient_count FROM user WHERE Role = 'Patient'";
+$patientResult = $connection->query($patientQuery);
+$patientCount = $patientResult->fetch_assoc()['patient_count'];
 
 ?>
 
@@ -73,17 +87,13 @@ session_start();
               Admin Menu
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><a href="admin-dashboard.php" class="text-decoration-none"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
-
-              <li class="list-group-item"><a href="admin-blood-tests.php" class="text-decoration-none"><i class="bi bi-droplet me-2"></i>Upload Smear</a></li>
-              <li class="list-group-item"><a href="admin-reports.php" class="text-decoration-none"><i class="bi bi-file-earmark-text me-2"></i> Test Reports</a></li>
-              <li class="list-group-item"><a href="admin-insights.php" class="text-decoration-none"><i class="bi bi-graph-up me-2"></i> Insights</a></li>
+              <li class="list-group-item "><a href="admin-insights.php" class="text-decoration-none"><i class="bi bi-graph-up me-2"></i> Insights</a></li>
               <li class="list-group-item active"><a href="admin-user-management.php" class="text-decoration-none text-white"><i class="bi bi-person-badge me-2"></i> Users </a></li>
-              <li class="list-group-item"><a href="admin-services.php" class="text-decoration-none"><i class="bi bi-people me-2"></i>Services </a></li>
-              <li class="list-group-item "><a href="admin-platform&content.php" class="text-decoration-none"><i class="bi bi-heart-pulse me-2"></i>Contents </a></li>
-              <li class="list-group-item "><a href="admin-system-security.php" class="text-decoration-none"><i class="bi bi-send-arrow-down-fill me-2"></i>System & Security </a></li>
+              <li class="list-group-item  "><a href="admin-services.php" class="text-decoration-none "><i class="bi bi-people me-2"></i>Services </a></li>
+              <li class="list-group-item "><a href="admin-appointments.php" class="text-decoration-none" ><i class="bi bi-calendar-check me-2"></i>Appointments</a></li>
+              <li class="list-group-item "><a href="admin-system-security.php" class="text-decoration-none "><i class="bi bi-send-arrow-down-fill me-2"></i>System & Security</a></li>
               <li class="list-group-item "><a href="admin-schedule_setup.php" class="text-decoration-none"><i class="bi bi-calendar-week me-2"></i>Schedule Setup</a></li>
-              <li class="list-group-item"><a href="../../login.php" class="text-decoration-none"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+              <li class="list-group-item"><a href="../../logout.php" class="text-decoration-none"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
             </ul>
           </div>
 
@@ -94,15 +104,15 @@ session_start();
             <div class="card-body">
               <div class="mb-3">
                 <h6 class="mb-1">Total Doctors</h6>
-                <h3 class="text-primary mb-0" id="doctorCount">12</h3>
+                <h3 class="text-primary mb-0" id="doctorCount"><?php echo $doctorCount; ?></h3>
               </div>
               <div class="mb-3">
                 <h6 class="mb-1">Total Assistants</h6>
-                <h3 class="text-success mb-0" id="assistantCount">28</h3>
+                <h3 class="text-success mb-0" id="assistantCount"><?php echo $assistantCount; ?></h3>
               </div>
               <div>
                 <h6 class="mb-1">Total Patients</h6>
-                <h3 class="text-info mb-0" id="patientCount">147</h3>
+                <h3 class="text-info mb-0" id="patientCount"><?php echo $patientCount; ?></h3>
               </div>
             </div>
           </div>
@@ -111,6 +121,28 @@ session_start();
         <!-- Main Content -->
         <div class="col-lg-9">
           <!-- Tabs -->
+          <?php
+if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+    echo '<ul class="list-unstyled mb-0">';
+    foreach ($_SESSION['errors'] as $error) {
+        echo '<li><i class="bi bi-x-circle me-2"></i>' . htmlspecialchars($error) . '</li>';
+    }
+    echo '</ul>';
+  
+    
+    // Display each error in the list
+   
+    
+    // Add dismiss button
+    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+    echo '</div>';
+    
+    // Optional: Clear errors after displaying them
+    // unset($_SESSION['errors']);
+}
+?>
+
           <ul class="nav nav-tabs mb-4" id="userTabs" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="doctors-tab" data-bs-toggle="tab" data-bs-target="#doctors" type="button" role="tab" aria-controls="doctors" aria-selected="true">
@@ -133,48 +165,7 @@ session_start();
               </button>
             </li>
           </ul>
-          <?php
-          if (isset($_SESSION['errors']['existence']) && !empty($_SESSION['errors']['existence'])) {
-            echo '<div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <strong>Warning!</strong> ' . htmlspecialchars($_SESSION['errors']['existence']) . '
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>';
 
-            unset($_SESSION['errors']['existence']);
-          }
-          if (isset($_SESSION['message']) && !empty($_SESSION['message'])) {
-            echo '<div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                              <i class="bi bi-check-circle-fill me-2"></i>
-                              <strong>Success!</strong> ' . htmlspecialchars($_SESSION['message']) . '
-                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>';
-
-            unset($_SESSION['message']);
-          }
-
-          if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-            echo '<div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                              <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                              <strong>Error!</strong> ' . htmlspecialchars($_SESSION['error']) . '
-                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>';
-
-            unset($_SESSION['error']);
-          }
-
-
-          if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
-            echo '<div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <strong>Error!</strong><br>'
-              . implode('<br>', array_map('htmlspecialchars', $_SESSION['errors'])) .
-              '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>';
-
-            unset($_SESSION['errors']);
-          }
-          ?>
 
           <!-- Tab Content -->
           <div class="tab-content" id="userTabsContent">
@@ -189,7 +180,6 @@ session_start();
                 </div>
 
                 <div class="card-body" id="doctorFormContainer" style="display: none;">
-
 
 
 
@@ -263,60 +253,60 @@ session_start();
 
 
 
-             
-                <script> //doctorjs
-        $(document).ready(function () {
-    // Centralized toast function (can be moved to a separate utility file)
-    function showToast(message, type) {
-        // Create a toast container if it doesn't exist
-        if ($('#toast-container').length === 0) {
-            $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
-        }
 
-        // Create unique ID for each toast to prevent conflicts
-        const toastId = 'toast-' + Date.now();
+                <script>
+                  //-------------------doctor JS------------------//
 
-        // Create toast element with unique ID
-        const toastElement = $(`
-            <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
+                  $(document).ready(function() {
+
+                    // Centralized toast function (can be moved to a separate utility file)
+                    function showToast(message, type) {
+                      // Create a toast container if it doesn't exist
+                      if ($('#toast-container').length === 0) {
+                        $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
+                      }
+                      // Create unique ID for each toast to prevent conflicts
+                      const toastId = 'toast-' + Date.now();
+                      // Create toast element with unique ID
+                      const toastElement = $(`
+                       <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="d-flex">
                     <div class="toast-body">${message}</div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        `);
+                     </div>
+                      </div>
+                      `);
+                      // Add to container and show
+                      $('#toast-container').append(toastElement);
+                      const toast = new bootstrap.Toast(`#${toastId}`);
+                      toast.show();
+                      // Remove toast after it's hidden
+                      toastElement.on('hidden.bs.toast', function() {
+                        $(this).remove();
+                      });
+                    }
 
-        // Add to container and show
-        $('#toast-container').append(toastElement);
-        const toast = new bootstrap.Toast(`#${toastId}`);
-        toast.show();
 
-        // Remove toast after it's hidden
-        toastElement.on('hidden.bs.toast', function () {
-            $(this).remove();
-        });
-    }
+                    function loadDoctors() {
+                      $.ajax({
+                        url: '../admin_backend/user-management/doctor_display.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                          let tableBody = $('#doctorsTableBody');
+                          tableBody.empty();
 
-    function loadDoctors() {
-        $.ajax({
-            url: '../admin_backend/user-management/doctor_display.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                let tableBody = $('#doctorsTableBody');
-                tableBody.empty(); 
+                          response.forEach(function(doctor) {
+                            let isActive = doctor.Status === 'Active';
 
-                response.forEach(function (doctor) {
-                    let isActive = doctor.Status === 'Active';
+                            let statusBadge = isActive ?
+                              '<span class="badge bg-success">Active</span>' :
+                              '<span class="badge bg-danger">Not Active</span>';
 
-                    let statusBadge = isActive
-                        ? '<span class="badge bg-success">Active</span>'
-                        : '<span class="badge bg-danger">Not Active</span>';
+                            let Specialization = doctor.Specialization ? doctor.Specialization : "N/A";
+                            let createdAt = doctor.Account_Creation_Date ? doctor.Account_Creation_Date : "Unknown Date";
 
-                    let Specialization = doctor.Specialization ? doctor.Specialization : "N/A";  
-                    let createdAt = doctor.Account_Creation_Date ? doctor.Account_Creation_Date : "Unknown Date"; 
-
-                    let toggleButton = `
+                            let toggleButton = `
                         <button class="btn ${isActive ? 'btn-warning' : 'btn-success'} btn-sm toggle-doctor-status" 
                             data-id="${doctor.User_ID}" 
                             data-name="${doctor.Name}"
@@ -324,7 +314,7 @@ session_start();
                             ${isActive ? 'Deactivate' : 'Activate'}
                         </button>`;
 
-                    let row = `<tr>
+                            let row = `<tr>
                         <td>${doctor.Name}</td>
                         <td>${doctor.Email}</td>
                         <td>${Specialization}</td>  
@@ -333,28 +323,26 @@ session_start();
                         <td>${toggleButton}</td>
                     </tr>`;
 
-                    tableBody.append(row);
-                });
-            },
-            error: function (xhr, status, error) {
-                showToast(`Error fetching doctors: ${error}`, 'danger');
-                console.error("Error fetching doctors:", error);
-            }
-        });
-    }
+                            tableBody.append(row);
+                          });
+                        },
+                        error: function(xhr, status, error) {
+                          showToast(`Error fetching doctors: ${error}`, 'danger');
+                          console.error("Error fetching doctors:", error);
+                        }
+                      });
+                    }
 
-    // Centralized status toggle handler
-    $(document).on('click', '.toggle-doctor-status', function () {
-        let doctorId = $(this).data('id');
-        let doctorName = $(this).data('name');
-        let currentStatus = $(this).data('status');
-        let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
-
-        // Unique modal ID for doctors
-        const modalId = 'doctor-confirm-modal';
-
-        // Confirmation Modal with unique ID
-        const confirmModal = `
+                    // Centralized status toggle handler
+                    $(document).on('click', '.toggle-doctor-status', function() {
+                      let doctorId = $(this).data('id');
+                      let doctorName = $(this).data('name');
+                      let currentStatus = $(this).data('status');
+                      let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
+                      // Unique modal ID for doctors
+                      const modalId = 'doctor-confirm-modal';
+                      // Confirmation Modal with unique ID
+                      const confirmModal = `
             <div class="modal fade" id="${modalId}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -375,51 +363,50 @@ session_start();
             </div>
         `;
 
-        // Remove any existing modal first
-        $(`#${modalId}`).remove();
-        $('body').append(confirmModal);
-        
-        // Show the modal
-        const modal = new bootstrap.Modal(`#${modalId}`);
-        modal.show();
+                      // Remove any existing modal first
+                      $(`#${modalId}`).remove();
+                      $('body').append(confirmModal);
 
-        // Confirm button handler
-        $(document).off('click', '#confirmDoctorStatusChange').on('click', '#confirmDoctorStatusChange', function() {
-            $.ajax({
-                url: '../admin_backend/user-management/doctor_toggle_status.php',
-                type: 'POST',
-                data: { id: doctorId, status: newStatus },
-                success: function (response) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show success toast
-                    showToast(`Doctor ${doctorName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
-                    
-                    // Reload doctors list
-                    loadDoctors(); 
-                },
-                error: function (xhr, status, error) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show error toast
-                    showToast(`Error updating doctor's account status: ${error}`, 'danger');
-                    
-                    console.error("Error updating doctor status:", error);
-                }
-            });
-        });
-    });
+                      // Show the modal
+                      const modal = new bootstrap.Modal(`#${modalId}`);
+                      modal.show();
 
-    // Initial load of doctors
-    loadDoctors(); 
-});
+                      // Confirm button handler
+                      $(document).off('click', '#confirmDoctorStatusChange').on('click', '#confirmDoctorStatusChange', function() {
+                        $.ajax({
+                          url: '../admin_backend/user-management/doctor_toggle_status.php',
+                          type: 'POST',
+                          data: {
+                            id: doctorId,
+                            status: newStatus
+                          },
+                          success: function(response) {
+                            // Close the modal
+                            modal.hide();
+                            // Show success toast
+                            showToast(`Doctor ${doctorName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
+                            // Reload doctors list
+                            loadDoctors();
+                          },
+                          error: function(xhr, status, error) {
+                            // Close the modal
+                            modal.hide();
+                            // Show error toast
+                            showToast(`Error updating doctor's account status: ${error}`, 'danger');
+                            console.error("Error updating doctor status:", error);
+                          }
+                        });
+                      });
+                    });
+                    // Initial load of doctors
+                    loadDoctors();
+                  });
                 </script>
 
 
               </div>
             </div>
+
 
             <!-- Assistants Tab -->
             <div class="tab-pane fade" id="assistants" role="tabpanel" aria-labelledby="assistants-tab">
@@ -431,11 +418,6 @@ session_start();
                   </button>
                 </div>
                 <div class="card-body" id="assistantFormContainer" style="display: none;">
-
-
-
-
-
                   <form id="createAssistantForm" action="../admin_backend/user-management/assistant-management_backend.php" method="post">
                     <div class="row">
                       <div class="col-md-6 mb-3">
@@ -470,18 +452,18 @@ session_start();
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Manage Assistants</h5>
-                 
+
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                        <th>Username</th>
-                        <th>Email</th>                   
-                        <th>Creation Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Creation Date</th>
+                          <th>Status</th>
+                          <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody id="assistantsTableBody">
@@ -493,20 +475,21 @@ session_start();
                 </div>
               </div>
             </div>
-            <script>//assistantjs
-  $(document).ready(function () {
-    // Centralized toast function (can be moved to a separate utility file)
-    function showToast(message, type) {
-        // Create a toast container if it doesn't exist
-        if ($('#toast-container').length === 0) {
-            $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
-        }
+            <script>
+              //assistantjs
+              $(document).ready(function() {
+                // Centralized toast function (can be moved to a separate utility file)
+                function showToast(message, type) {
+                  // Create a toast container if it doesn't exist
+                  if ($('#toast-container').length === 0) {
+                    $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
+                  }
 
-        // Create unique ID for each toast to prevent conflicts
-        const toastId = 'toast-' + Date.now();
+                  // Create unique ID for each toast to prevent conflicts
+                  const toastId = 'toast-' + Date.now();
 
-        // Create toast element with unique ID
-        const toastElement = $(`
+                  // Create toast element with unique ID
+                  const toastElement = $(`
             <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">${message}</div>
@@ -515,36 +498,36 @@ session_start();
             </div>
         `);
 
-        // Add to container and show
-        $('#toast-container').append(toastElement);
-        const toast = new bootstrap.Toast(`#${toastId}`);
-        toast.show();
+                  // Add to container and show
+                  $('#toast-container').append(toastElement);
+                  const toast = new bootstrap.Toast(`#${toastId}`);
+                  toast.show();
 
-        // Remove toast after it's hidden
-        toastElement.on('hidden.bs.toast', function () {
-            $(this).remove();
-        });
-    }
+                  // Remove toast after it's hidden
+                  toastElement.on('hidden.bs.toast', function() {
+                    $(this).remove();
+                  });
+                }
 
-    function loadAssistants() {
-        $.ajax({
-            url: '../admin_backend/user-management/assistant_display.php', 
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                let tableBody = $('#assistantsTableBody');
-                tableBody.empty(); 
+                function loadAssistants() {
+                  $.ajax({
+                    url: '../admin_backend/user-management/assistant_display.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                      let tableBody = $('#assistantsTableBody');
+                      tableBody.empty();
 
-                response.forEach(function (assistant) {
-                    let isActive = assistant.Status === 'Active';
+                      response.forEach(function(assistant) {
+                        let isActive = assistant.Status === 'Active';
 
-                    let statusBadge = isActive
-                        ? '<span class="badge bg-success">Active</span>'
-                        : '<span class="badge bg-danger">Not Active</span>';
+                        let statusBadge = isActive ?
+                          '<span class="badge bg-success">Active</span>' :
+                          '<span class="badge bg-danger">Not Active</span>';
 
-                    let createdAt = assistant.Account_Creation_Date ? assistant.Account_Creation_Date : "Unknown Date"; 
+                        let createdAt = assistant.Account_Creation_Date ? assistant.Account_Creation_Date : "Unknown Date";
 
-                    let toggleButton = `
+                        let toggleButton = `
                         <button class="btn ${isActive ? 'btn-warning' : 'btn-success'} btn-sm toggle-assistant-status" 
                             data-id="${assistant.User_ID}" 
                             data-name="${assistant.Name}"
@@ -552,7 +535,7 @@ session_start();
                             ${isActive ? 'Deactivate' : 'Activate'}
                         </button>`;
 
-                    let row = `<tr>
+                        let row = `<tr>
                         <td>${assistant.Name}</td>
                         <td>${assistant.Email}</td> 
                         <td>${createdAt}</td>  
@@ -560,35 +543,35 @@ session_start();
                         <td>${toggleButton}</td>
                     </tr>`;
 
-                    tableBody.append(row);
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Full error details:", {
-                    status: xhr.status,
-                    statusText: xhr.statusText,
-                    responseText: xhr.responseText,
-                    errorThrown: error
-                });
+                        tableBody.append(row);
+                      });
+                    },
+                    error: function(xhr, status, error) {
+                      console.error("Full error details:", {
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        responseText: xhr.responseText,
+                        errorThrown: error
+                      });
 
-                // Show error toast with more detailed message
-                showToast(`Error fetching Assistants: ${error} (Status: ${xhr.status})`, 'danger');
-            }
-        });
-    }
+                      // Show error toast with more detailed message
+                      showToast(`Error fetching Assistants: ${error} (Status: ${xhr.status})`, 'danger');
+                    }
+                  });
+                }
 
-    // Centralized status toggle handler
-    $(document).on('click', '.toggle-assistant-status', function () {
-        let assistantId = $(this).data('id');
-        let assistantName = $(this).data('name');
-        let currentStatus = $(this).data('status');
-        let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
+                // Centralized status toggle handler
+                $(document).on('click', '.toggle-assistant-status', function() {
+                  let assistantId = $(this).data('id');
+                  let assistantName = $(this).data('name');
+                  let currentStatus = $(this).data('status');
+                  let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
 
-        // Unique modal ID for assistants
-        const modalId = 'assistant-confirm-modal';
+                  // Unique modal ID for assistants
+                  const modalId = 'assistant-confirm-modal';
 
-        // Confirmation Modal with unique ID
-        const confirmModal = `
+                  // Confirmation Modal with unique ID
+                  const confirmModal = `
             <div class="modal fade" id="${modalId}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -609,53 +592,59 @@ session_start();
             </div>
         `;
 
-        // Remove any existing modal first
-        $(`#${modalId}`).remove();
-        $('body').append(confirmModal);
-        
-        // Show the modal
-        const modal = new bootstrap.Modal(`#${modalId}`);
-        modal.show();
+                  // Remove any existing modal first
+                  $(`#${modalId}`).remove();
+                  $('body').append(confirmModal);
 
-        // Confirm button handler
-        $(document).off('click', '#confirmAssistantStatusChange').on('click', '#confirmAssistantStatusChange', function() {
-            $.ajax({
-                url: '../admin_backend/user-management/assistant_toggle_status.php',
-                type: 'POST',
-                data: { id: assistantId, status: newStatus },
-                success: function (response) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show success toast
-                    showToast(`${assistantName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
-                    
-                    // Reload assistants list
-                    loadAssistants(); 
-                },
-                error: function (xhr, status, error) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show error toast
-                    showToast(`Error updating assistant's account status: ${error}`, 'danger');
-                    
-                    console.error("Error updating assistant status:", error);
-                }
-            });
-        });
-    });
+                  // Show the modal
+                  const modal = new bootstrap.Modal(`#${modalId}`);
+                  modal.show();
 
-    // Initial load of assistants
-    loadAssistants(); 
-});
-                </script>
+                  // Confirm button handler
+                  $(document).off('click', '#confirmAssistantStatusChange').on('click', '#confirmAssistantStatusChange', function() {
+                    $.ajax({
+                      url: '../admin_backend/user-management/assistant_toggle_status.php',
+                      type: 'POST',
+                      data: {
+                        id: assistantId,
+                        status: newStatus
+                      },
+                      success: function(response) {
+                        // Close the modal
+                        modal.hide();
+
+                        // Show success toast
+                        showToast(`${assistantName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
+
+                        // Reload assistants list
+                        loadAssistants();
+                      },
+                      error: function(xhr, status, error) {
+                        // Close the modal
+                        modal.hide();
+
+                        // Show error toast
+                        showToast(`Error updating assistant's account status: ${error}`, 'danger');
+
+                        console.error("Error updating assistant status:", error);
+                      }
+                    });
+                  });
+                });
+
+                // Initial load of assistants
+                loadAssistants();
+              });
+            </script>
+
+
+
             <!-- Patients Tab -->
             <div class="tab-pane fade" id="patients" role="tabpanel" aria-labelledby="patients-tab">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Manage Patients</h5>
-                
+
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -679,20 +668,21 @@ session_start();
               </div>
             </div>
 
-            <script>//patientjs
-           $(document).ready(function () {
-    // Centralized toast function (can be moved to a separate utility file)
-    function showToast(message, type) {
-        // Create a toast container if it doesn't exist
-        if ($('#toast-container').length === 0) {
-            $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
-        }
+            <script>
+              //patientjs
+              $(document).ready(function() {
+                // Centralized toast function (can be moved to a separate utility file)
+                function showToast(message, type) {
+                  // Create a toast container if it doesn't exist
+                  if ($('#toast-container').length === 0) {
+                    $('body').append('<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>');
+                  }
 
-        // Create unique ID for each toast to prevent conflicts
-        const toastId = 'toast-' + Date.now();
+                  // Create unique ID for each toast to prevent conflicts
+                  const toastId = 'toast-' + Date.now();
 
-        // Create toast element with unique ID
-        const toastElement = $(`
+                  // Create toast element with unique ID
+                  const toastElement = $(`
             <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">${message}</div>
@@ -701,34 +691,34 @@ session_start();
             </div>
         `);
 
-        // Add to container and show
-        $('#toast-container').append(toastElement);
-        const toast = new bootstrap.Toast(`#${toastId}`);
-        toast.show();
+                  // Add to container and show
+                  $('#toast-container').append(toastElement);
+                  const toast = new bootstrap.Toast(`#${toastId}`);
+                  toast.show();
 
-        // Remove toast after it's hidden
-        toastElement.on('hidden.bs.toast', function () {
-            $(this).remove();
-        });
-    }
+                  // Remove toast after it's hidden
+                  toastElement.on('hidden.bs.toast', function() {
+                    $(this).remove();
+                  });
+                }
 
-    function loadPatients() {
-        $.ajax({
-            url: '../admin_backend/user-management/patient_display.php', 
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                let tableBody = $('#patientsTableBody');
-                tableBody.empty(); 
+                function loadPatients() {
+                  $.ajax({
+                    url: '../admin_backend/user-management/patient_display.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                      let tableBody = $('#patientsTableBody');
+                      tableBody.empty();
 
-                response.forEach(function (patient) {
-                    let isActive = patient.Status === 'Active';
+                      response.forEach(function(patient) {
+                        let isActive = patient.Status === 'Active';
 
-                    let statusBadge = isActive
-                        ? '<span class="badge bg-success">Active</span>'
-                        : '<span class="badge bg-danger">Not Active</span>';
+                        let statusBadge = isActive ?
+                          '<span class="badge bg-success">Active</span>' :
+                          '<span class="badge bg-danger">Not Active</span>';
 
-                    let toggleButton = `
+                        let toggleButton = `
                         <button class="btn ${isActive ? 'btn-warning' : 'btn-success'} btn-sm toggle-patient-status" 
                             data-id="${patient.User_ID}" 
                             data-name="${patient.Name}"
@@ -736,42 +726,42 @@ session_start();
                             ${isActive ? 'Deactivate' : 'Activate'}
                         </button>`;
 
-                    let row = `<tr>
+                        let row = `<tr>
                         <td>${patient.Name}</td>
                         <td>${patient.Email}</td> 
                         <td>${statusBadge}</td>
                         <td>${toggleButton}</td>
                     </tr>`;
 
-                    tableBody.append(row);
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Full error details:", {
-                    status: xhr.status,
-                    statusText: xhr.statusText,
-                    responseText: xhr.responseText,
-                    errorThrown: error
-                });
+                        tableBody.append(row);
+                      });
+                    },
+                    error: function(xhr, status, error) {
+                      console.error("Full error details:", {
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        responseText: xhr.responseText,
+                        errorThrown: error
+                      });
 
-                // Show error toast with more detailed message
-                showToast(`Error fetching Patients: ${error} (Status: ${xhr.status})`, 'danger');
-            }
-        });
-    }
+                      // Show error toast with more detailed message
+                      showToast(`Error fetching Patients: ${error} (Status: ${xhr.status})`, 'danger');
+                    }
+                  });
+                }
 
-    // Centralized status toggle handler
-    $(document).on('click', '.toggle-patient-status', function () {
-        let patientId = $(this).data('id');
-        let patientName = $(this).data('name');
-        let currentStatus = $(this).data('status');
-        let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
+                // Centralized status toggle handler
+                $(document).on('click', '.toggle-patient-status', function() {
+                  let patientId = $(this).data('id');
+                  let patientName = $(this).data('name');
+                  let currentStatus = $(this).data('status');
+                  let newStatus = currentStatus === 'Active' ? 'Not Active' : 'Active';
 
-        // Unique modal ID for patients
-        const modalId = 'patient-confirm-modal';
+                  // Unique modal ID for patients
+                  const modalId = 'patient-confirm-modal';
 
-        // Confirmation Modal with unique ID
-        const confirmModal = `
+                  // Confirmation Modal with unique ID
+                  const confirmModal = `
             <div class="modal fade" id="${modalId}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -792,48 +782,51 @@ session_start();
             </div>
         `;
 
-        // Remove any existing modal first
-        $(`#${modalId}`).remove();
-        $('body').append(confirmModal);
-        
-        // Show the modal
-        const modal = new bootstrap.Modal(`#${modalId}`);
-        modal.show();
+                  // Remove any existing modal first
+                  $(`#${modalId}`).remove();
+                  $('body').append(confirmModal);
 
-        // Confirm button handler
-        $(document).off('click', '#confirmPatientStatusChange').on('click', '#confirmPatientStatusChange', function() {
-            $.ajax({
-                url: '../admin_backend/user-management/patient_toggle_status.php', // FIXED: Corrected URL from previous version
-                type: 'POST',
-                data: { id: patientId, status: newStatus },
-                success: function (response) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show success toast
-                    showToast(`${patientName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
-                    
-                    // Reload patients list
-                    loadPatients(); 
-                },
-                error: function (xhr, status, error) {
-                    // Close the modal
-                    modal.hide();
-                    
-                    // Show error toast
-                    showToast(`Error updating patient's account status: ${error}`, 'danger');
-                    
-                    console.error("Error updating patient status:", error);
-                }
-            });
-        });
-    });
+                  // Show the modal
+                  const modal = new bootstrap.Modal(`#${modalId}`);
+                  modal.show();
 
-    // Initial load of patients
-    loadPatients(); 
-});
-         </script>
-                
+                  // Confirm button handler
+                  $(document).off('click', '#confirmPatientStatusChange').on('click', '#confirmPatientStatusChange', function() {
+                    $.ajax({
+                      url: '../admin_backend/user-management/patient_toggle_status.php', // FIXED: Corrected URL from previous version
+                      type: 'POST',
+                      data: {
+                        id: patientId,
+                        status: newStatus
+                      },
+                      success: function(response) {
+                        // Close the modal
+                        modal.hide();
+
+                        // Show success toast
+                        showToast(`${patientName}'s account has been ${newStatus === 'Active' ? 'activated' : 'deactivated'} successfully.`, 'success');
+
+                        // Reload patients list
+                        loadPatients();
+                      },
+                      error: function(xhr, status, error) {
+                        // Close the modal
+                        modal.hide();
+
+                        // Show error toast
+                        showToast(`Error updating patient's account status: ${error}`, 'danger');
+
+                        console.error("Error updating patient status:", error);
+                      }
+                    });
+                  });
+                });
+
+                // Initial load of patients
+                loadPatients();
+              });
+            </script>
+
             <!-- Assignments Tab -->
             <div class="tab-pane fade" id="assignments" role="tabpanel" aria-labelledby="assignments-tab">
               <div class="card mb-4">
@@ -844,115 +837,28 @@ session_start();
                   </button>
                 </div>
                 <div class="card-body" id="assignmentFormContainer" style="display: none;">
-                  <form id="createAssignmentForm">
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="assignDoctor" class="form-label">Select Doctor</label>
-                        <select class="form-select" id="assignDoctor" required>
-                          <option value="" selected disabled>Choose a doctor...</option>
-
-                        </select>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="assignAssistant" class="form-label">Select Assistant</label>
-                        <select class="form-select" id="assignAssistant" required>
-                          <option value="" selected disabled>Choose an assistant...</option>
-
-                        </select>
-                      </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="assignDoctor" class="form-label">Select Doctor</label>
+                      <select class="form-select" id="assignDoctor" name="doctor_id" required>
+                        <option value="" selected disabled>Choose a doctor...</option>
+                      </select>
                     </div>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <scrip>
-    <script>
-$(document).ready(function() {
-    // Load doctors
-    $.ajax({
-        url: '../admin_backend/user-management/doctor_display.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(doctors) {
-            doctors.forEach(function(doctor) {
-                $('#assignDoctor').append(
-                    `<option value="${doctor.Doctor_ID}">
-                        ${doctor.Name} - ${doctor.Specialization}
-                    </option>`
-                );
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error("Error loading doctors:", error);
-            alert("Failed to load doctors. Please try again.");
-        }
-    });
-
-    // Load unassigned assistants
-    $.ajax({
-        url: '../admin_backend/user-management/assistant_display.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(assistants) {
-            if (assistants.length === 0) {
-                $('#assignAssistant').append(
-                    '<option value="" disabled>No unassigned assistants available</option>'
-                );
-            } else {
-                assistants.forEach(function(assistant) {
-                    $('#assignAssistant').append(
-                        `<option value="${assistant.Assistant_ID}">
-                            ${assistant.Name}
-                        </option>`
-                    );
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error loading assistants:", error);
-            alert("Failed to load assistants. Please try again.");
-        }
-    });
-
-    // Handle form submission
-    $('#assignmentForm').on('submit', function(e) {
-        e.preventDefault();
-
-        const doctorId = $('#assignDoctor').val();
-        const assistantId = $('#assignAssistant').val();
-
-        $.ajax({
-            url: '../admin_backend/user-management/assignments.php',
-            method: 'POST',
-            data: {
-                doctor_id: doctorId,
-                assistant_id: assistantId
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert(response.message);
-                    // Refresh assistants dropdown to remove the newly assigned assistant
-                    $('#assignAssistant option:selected').remove();
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Assignment error:", error);
-                alert("Failed to assign doctor and assistant. Please try again.");
-            }
-        });
-    });
-});
-
-    </script>
-
-                    <div class="d-flex justify-content-end">
-                      <div id="assignmentError" class="text-danger me-auto"></div>
-                      <button type="button" class="btn btn-secondary me-2" id="cancelAssignmentBtn">Cancel</button>
-                      <button type="submit" class="btn btn-primary">Create Assignment</button>
+                    <div class="col-md-6 mb-3">
+                      <label for="assignAssistant" class="form-label">Select Assistant</label>
+                      <select class="form-select" id="assignAssistant" name="assistant_id" required>
+                        <option value="" selected disabled>Choose an assistant...</option>
+                      </select>
                     </div>
-                  </form>
+                  </div>
+                  <div class="text-end">
+                    <button class="btn btn-primary" id="assignBTN">Assign</button>
+                  </div>
                 </div>
               </div>
+
+
+
 
               <div class="card">
                 <div class="card-header">
@@ -964,7 +870,7 @@ $(document).ready(function() {
                       <thead>
                         <tr>
                           <th>Doctor</th>
-                          <th>Assistants</th>
+                          <th>Assistant</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -975,22 +881,311 @@ $(document).ready(function() {
                   </div>
                 </div>
               </div>
+
             </div>
-          </div>
+
+            <!-- Toast Notifications for Success and Error Messages -->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+              <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span id="successToastMessage">Assignment successful!</span>
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+              <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="errorToastMessage">An error occurred!</span>
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+
+            <script>
+              // Wait for the document to be fully loaded
+              document.addEventListener('DOMContentLoaded', function() {
+                console.log("Document loaded, setting up event handlers");
+
+                // Set up jQuery toggle
+                if (typeof jQuery !== 'undefined') {
+                  console.log("jQuery is available, setting up jQuery handlers");
+                  $('#toggleAssignmentForm').on('click', function() {
+                    console.log("jQuery toggle button clicked");
+                    $('#assignmentFormContainer').toggle();
+                  });
+                }
+
+                // Load doctors
+                if (typeof jQuery !== 'undefined') {
+                  $.ajax({
+                    url: '../admin_backend/user-management/doctor_display.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(doctors) {
+                      if (doctors.length === 0) {
+                        $('#assignDoctor').append(
+                          '<option value="" disabled>No doctors available</option>'
+                        );
+                        $('#createAssignmentForm button[type="submit"]').prop('disabled', true);
+                      } else {
+                        doctors.forEach(function(doctor) {
+                          $('#assignDoctor').append(
+                            `<option value="${doctor.User_ID}">
+                                ${doctor.Name} - ${doctor.Specialization}
+                            </option>`
+                          );
+                        });
+                      }
+                    },
+                    error: function(xhr, status, error) {
+                      console.error("Error loading doctors:", error);
+                      showErrorToast("Failed to load doctors. Please try again.");
+                    }
+                  });
+
+                  // Load unassigned assistants
+                  $.ajax({
+                    url: '../admin_backend/user-management/assistant_display.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(assistants) {
+                      if (assistants.length === 0) {
+                        $('#assignAssistant').append(
+                          '<option value="" disabled selected>No unassigned assistants available</option>'
+                        );
+                        $('#createAssignmentForm button[type="submit"]').prop('disabled', true);
+                      } else {
+                        assistants.forEach(function(assistant) {
+                          $('#assignAssistant').append(
+                            `<option value="${assistant.User_ID}">
+                                ${assistant.Name}
+                            </option>`
+                          );
+                        });
+                      }
+                    },
+                    error: function(xhr, status, error) {
+                      console.error("Error loading assistants:", error);
+                      showErrorToast("Failed to load assistants. Please try again.");
+                    }
+                  });
+
+                  let assignBTN = document.getElementById("assignBTN");
+
+                  assignBTN.addEventListener('click', function() {
+                    let docID = document.getElementById("assignDoctor").value;
+                    let asstID = document.getElementById("assignAssistant").value;
+
+                    // Validation
+                    if (!docID || !asstID) {
+                      showErrorToast("Please select both a doctor and an assistant");
+                      return;
+                    }
+
+                    // Show loading state
+                    $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Assigning...');
+
+                    $.ajax({
+                      url: '../admin_backend/user-management/assignments.php',
+                      method: 'POST',
+                      data: {
+                        doctor_id: docID,
+                        assistant_id: asstID
+                      },
+                      dataType: 'json',
+                      success: function(response) {
+                        if (response.success) {
+                          loadAssignments();
+
+                          showSuccessToast("Doctor and assistant successfully assigned!");
+                          // Reset the form
+                          $('#assignDoctor').val('');
+                          $('#assignAssistant').val('');
+                          $('#assignmentFormContainer').hide();
+                        } else if (response.message) {
+                          showErrorToast("Failed to assign: " + response.message);
+                        }
+                        // Reset button state
+                        $('#assignBTN').prop('disabled', false).text('Assign');
+                      },
+                      error: function(xhr, status, error) {
+                        console.error("Assignment error details:", {
+                          status: status,
+                          error: error,
+                          responseText: xhr.responseText
+                        });
+
+                        // Try to parse the response if possible
+                        try {
+                          const errorData = JSON.parse(xhr.responseText);
+                          showErrorToast(errorData.message || "Failed to assign. Please try again.");
+                        } catch (e) {
+                          showErrorToast("Assignment failed: " + xhr.status + " " + xhr.statusText);
+                        }
+
+                        // Reset button state
+                        $('#assignBTN').prop('disabled', false).text('Assign');
+                      }
+                    });
+                  });
+
+                  // Functions to show toast notifications
+                  function showSuccessToast(message) {
+                    $('#successToastMessage').text(message);
+                    var successToast = new bootstrap.Toast(document.getElementById('successToast'), {
+                      delay: 5000,
+                      animation: true
+                    });
+                    successToast.show();
+                  }
+
+                  function showErrorToast(message) {
+                    console.log(message)
+                    $('#errorToastMessage').text(message);
+                    var errorToast = new bootstrap.Toast(document.getElementById('errorToast'), {
+                      delay: 5000,
+                      animation: true
+                    });
+                    errorToast.show();
+                  }
+                }
+              });
+            </script>
+
+
+
+
+
+            <script>
+              // Function to load assignments
+              function loadAssignments() {
+                $.ajax({
+                  url: '../admin_backend/user-management/loadassignments.php',
+                  type: 'GET',
+                  success: function(data) {
+                    $('#assignmentsTableBody').html(data);
+                  }
+                });
+              }
+
+              // Add modal HTML to the page if it doesn't exist
+              if (!$('#confirmationModal').length) {
+                $('body').append(`
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirm Unassignment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to proceed with the unassignment?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmUnassign">Yes, Unassign</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <script>
-      
-    </script>
+    `);
+              }
+
+              if (!$('#successModal').length) {
+                $('body').append(`
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+                        </div>
+                        <p id="successMessage" class="text-center"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
+              }
+
+              // Variable to store the current ID being processed
+              let currentUnassignId = null;
+
+              // Event handler for unassign button
+              $(document).on('click', '.unassign-btn', function() {
+                currentUnassignId = $(this).data('id');
+                const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                confirmationModal.show();
+              });
+
+              // Event handler for the confirmation button in the modal
+              $(document).on('click', '#confirmUnassign', function() {
+                if (currentUnassignId) {
+                  // Hide the confirmation modal
+                  bootstrap.Modal.getInstance(document.getElementById('confirmationModal')).hide();
+
+                  // Show a loading spinner
+                  $('#assignmentsTableBody').html('<tr><td colspan="3" class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></td></tr>');
+
+                  // Process the unassignment
+                  $.ajax({
+                    url: '../admin_backend/user-management/unassign.php',
+                    type: 'POST',
+                    data: {
+                      id: currentUnassignId
+                    },
+                    success: function(response) {
+                      // Update the success modal with the response message
+                      $('#successMessage').text(response);
+
+                      // Show the success modal
+                      const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                      successModal.show();
+
+                      // Reload the assignments
+                      loadAssignments();
+
+                      // Reset the current ID
+                      currentUnassignId = null;
+                    },
+                    error: function() {
+                      // Handle error case
+                      $('#successMessage').text('An error occurred during unassignment.');
+                      const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                      successModal.show();
+                      loadAssignments();
+                    }
+                  });
+                }
+              });
+
+              // Load assignments when the page loads
+              $(document).ready(function() {
+                loadAssignments();
+              });
+            </script>
   </main>
 
   <footer id="footer" class="footer light-background">
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Medilab</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
-      </div>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">leukemiaVision</strong> <span>All Rights Reserved</span></p>
+
     </div>
   </footer>
 
@@ -1070,9 +1265,7 @@ $(document).ready(function() {
 </script>";
 
 
-  // File: clear_session.php
-  // Simple script to clear form data from session
-  session_start();
+
   unset($_SESSION['form_data']);
   unset($_SESSION['errors']);
   ?>

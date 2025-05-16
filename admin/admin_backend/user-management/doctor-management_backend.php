@@ -7,10 +7,7 @@ include_once("user-management-validation_backend.php");
 
 
 
-
-
 //-------Doctor insertion-------//
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['form_data'] = $_POST;
     $username = $_POST['username'];
@@ -22,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $speciality = $_POST['speciality'];
     $date = $_POST['date'];
     $license_number = $_POST['lisence_number'];
-
+    $Inst_ID=1;
 
     $errors = validateDoctorData(
         $username,
@@ -60,22 +57,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_id = $connection->insert_id;
 
 
-        $stmt2 = $connection->prepare("INSERT INTO doctor (Specialization, Account_Creation_Date, License_Number, User_ID) VALUES (?, ?, ?, ?)");
+        $stmt2 = $connection->prepare("INSERT INTO doctor (Specialization, Account_Creation_Date, License_Number, User_ID,Clinical_Inst_ID) VALUES (?, ?, ?, ?,?)");
         if (!$stmt2) {
             $_SESSION['error'] = "Error preparing doctor insert statement: " . $connection->error;
             header("Location: ../../admin_frontend/admin-user-management.php");
             exit();
         }
 
-        $stmt2->bind_param("sssi", $speciality, $date, $license_number, $user_id);
+        $stmt2->bind_param("sssis", $speciality, $date, $license_number, $user_id,$Inst_ID);
 
         if ($stmt2->execute()) {
             $_SESSION['message'] = "Doctor registration successful";
-
+            include_once("refresh_doctor_schedule.php");
             unset($_SESSION['form_data']);
+            
         } else {
             $_SESSION['error'] = "Error registering doctor: " . $stmt2->error;
         }
+
+
+
+
     } else {
         $_SESSION['error'] = "Error creating user: " . $stmt1->error;
     }
